@@ -7,7 +7,7 @@ package dominio;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 public enum Estado {
     ESPERANDO,

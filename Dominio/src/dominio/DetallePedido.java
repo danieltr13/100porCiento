@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @Table(name = "detallepedido")
@@ -37,27 +37,24 @@ public class DetallePedido implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumn(name="idpedido")
-    @Column(name="pedidoid")
-    private Pedido pedidoid;
+    private Pedido pedido;
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "idproducto")
-    @Column(name = "productoid")
-    private Producto productoid;
+    private Producto producto;
 
-    public DetallePedido() {
-    }
-
-    public DetallePedido(Long id, Integer linea, Integer cantidad, Float total, Pedido pedidoid, Producto productoid) {
+    public DetallePedido(Long id, Integer linea, Integer cantidad, Float total, Pedido pedido, Producto producto) {
         this.id = id;
         this.linea = linea;
         this.cantidad = cantidad;
         this.total = total;
-        this.pedidoid = pedidoid;
-        this.productoid = productoid;
+        this.pedido = pedido;
+        this.producto = producto;
     }
-    
-    
+
+    public DetallePedido() {
+    }
+
     
     public Long getId() {
         return id;
@@ -91,21 +88,22 @@ public class DetallePedido implements Serializable {
         this.total = total;
     }
 
-    public Pedido getPedidoid() {
-        return pedidoid;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setPedidoid(Pedido pedidoid) {
-        this.pedidoid = pedidoid;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public Producto getProductoid() {
-        return productoid;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProductoid(Producto productoid) {
-        this.productoid = productoid;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
+
     
     @Override
     public int hashCode() {
@@ -113,6 +111,7 @@ public class DetallePedido implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+    
 
     @Override
     public boolean equals(Object object) {
@@ -129,9 +128,7 @@ public class DetallePedido implements Serializable {
 
     @Override
     public String toString() {
-        return "DetallePedido{" + "id=" + id + ", linea=" + linea + ", cantidad=" + cantidad + ", total=" + total + ", pedidoid=" + pedidoid + ", productoid=" + productoid + '}';
+        return "dominio.DetallePedido[ id=" + id + " ]";
     }
-
     
-
 }

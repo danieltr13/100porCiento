@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @Table(name="producto")
@@ -36,17 +36,23 @@ public class Producto implements Serializable {
     @Column(name="cantidad", length = 12)
     protected Integer cantidad;
     
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "productoid")
-    protected List<DetalleIngrediente> ingredientes;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "producto")
+    protected List<DetalleIngrediente> detalleIngredientes;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoid")
-    protected List<DetallePedido> pedidos;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    protected List<DetallePedido> detallePedidos;
+
+    public Producto(Long idproducto, String nombre, Float precio, Integer cantidad) {
+        this.idproducto = idproducto;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+    }
+
     public Producto() {
     }
 
-    public Producto(Long idproducto, String nombre,Float precio, Integer cantidad) {
-        this.idproducto = idproducto;
+    public Producto(String nombre, Float precio, Integer cantidad) {
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
@@ -56,7 +62,15 @@ public class Producto implements Serializable {
         return idproducto;
     }
 
-    public void setId(Long idproducto){
+    public void setId(Long id) {
+        this.idproducto = id;
+    }
+
+    public Long getIdproducto() {
+        return idproducto;
+    }
+
+    public void setIdproducto(Long idproducto) {
         this.idproducto = idproducto;
     }
 
@@ -67,7 +81,6 @@ public class Producto implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
     public Float getPrecio() {
         return precio;
@@ -85,7 +98,22 @@ public class Producto implements Serializable {
         this.cantidad = cantidad;
     }
 
-    
+    public List<DetalleIngrediente> getDetalleIngredientes() {
+        return detalleIngredientes;
+    }
+
+    public void setDetalleIngredientes(List<DetalleIngrediente> detalleIngredientes) {
+        this.detalleIngredientes = detalleIngredientes;
+    }
+
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidos;
+    }
+
+    public void setDetallePedidos(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -108,7 +136,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.Producto[ id=" + idproducto + " ]";
+        return "Producto{" + "idproducto=" + idproducto + ", nombre=" + nombre + ", precio=" + precio + ", cantidad=" + cantidad + ", detalleIngredientes=" + detalleIngredientes + ", detallePedidos=" + detallePedidos + '}';
     }
     
 }

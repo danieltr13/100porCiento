@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @Table(name="cliente")
@@ -37,35 +37,8 @@ public class Cliente implements Serializable {
     private String telefono;
     @Column(name="domicilio",length = 45)
     private String domicilio;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "clienteid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Pedido> pedidos;
-    
-    public Cliente() {
-    }
-
-    public Cliente(String nombre, String apellido, String telefono, String domicilio) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.domicilio = domicilio;
-    }
-
-    public Cliente(Long id, String nombre, String apellido, String telefono, String domicilio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.domicilio = domicilio;
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -98,7 +71,23 @@ public class Cliente implements Serializable {
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,8 +110,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", domicilio=" + domicilio + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", domicilio=" + domicilio + ", pedidos=" + pedidos + '}';
     }
 
-     
 }

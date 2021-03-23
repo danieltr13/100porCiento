@@ -8,20 +8,31 @@ package dominio;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @DiscriminatorValue(value="productolisto")
 public class ProductoListo extends Producto implements Serializable {
-    
+
+    private static final long serialVersionUID = 1L;
+
+    public ProductoListo(String nombre, Float precio, Integer cantidad) {
+        super(nombre, precio, cantidad);
+    }
+
+    public ProductoListo() {
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.idproducto != null ? super.idproducto.hashCode() : 0);
+        hash += (idproducto != null ? idproducto.hashCode() : 0);
         return hash;
     }
 
@@ -32,7 +43,7 @@ public class ProductoListo extends Producto implements Serializable {
             return false;
         }
         ProductoListo other = (ProductoListo) object;
-        if ((super.idproducto == null && super.idproducto != null) || (super.idproducto != null && !super.idproducto.equals(super.idproducto))) {
+        if ((this.idproducto == null && other.idproducto != null) || (this.idproducto != null && !this.idproducto.equals(other.idproducto))) {
             return false;
         }
         return true;
@@ -40,7 +51,7 @@ public class ProductoListo extends Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.ProductoListo[ id=" + super.idproducto + " ]";
+        return "dominio.ProductoListo[ id=" + idproducto + " ]";
     }
     
 }

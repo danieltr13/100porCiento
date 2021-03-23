@@ -18,18 +18,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
-@Table(name="pedido")
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idpedido")
     private Long id;
@@ -43,24 +41,83 @@ public class Pedido implements Serializable {
      
     @ManyToOne(optional=false)
     @JoinColumn(name="idcliente")
-    @Column(name="clienteid")
-    private Cliente clienteid;
+    private Cliente cliente;
     
     @ManyToOne(optional = false)
     @JoinColumn(name="idusuario")
-    @Column(name="usuarioid")
-    private Usuario usuarioid;
+    private Usuario usuario;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoid")
-    private List<DetallePedido> pedidos;
-   
-    public Long getId() { 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
+    private List<DetallePedido> detallePedido;
+
+    public Pedido() {
+    }
+
+    public Pedido(Long id, Float total, Estado estado, Cliente cliente, Usuario usuario, List<DetallePedido> detallePedido) {
+        this.id = id;
+        this.total = total;
+        this.estado = estado;
+        this.cliente = cliente;
+        this.usuario = usuario;
+        this.detallePedido = detallePedido;
+    }
+
+    public Pedido(Float total, Estado estado, Cliente cliente, Usuario usuario, List<DetallePedido> detallePedido) {
+        this.total = total;
+        this.estado = estado;
+        this.cliente = cliente;
+        this.usuario = usuario;
+        this.detallePedido = detallePedido;
+    }
+
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<DetallePedido> getDetallePedido() {
+        return detallePedido;
+    }
+
+    public void setDetallePedido(List<DetallePedido> detallePedido) {
+        this.detallePedido = detallePedido;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -84,7 +141,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.Pedido[ id=" + id + " ]";
+        return "Pedido{" + "id=" + id + ", total=" + total + ", estado=" + estado + ", cliente=" + cliente + ", usuario=" + usuario + ", detallePedido=" + detallePedido + '}';
     }
     
 }

@@ -6,54 +6,38 @@
 package dominio;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @DiscriminatorValue(value="productopreparado")
 public class ProductoPreparado extends Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
- 
+
+    @Column(name="tamanio")
     private String tamanio;
 
     public ProductoPreparado() {
     }
 
-    public ProductoPreparado(String tamanio, Long idproducto, String nombre, Float precio, Integer cantidad) {
-        super(idproducto, nombre, precio, cantidad);
+    public ProductoPreparado(String tamanio, String nombre, Float precio, Integer cantidad) {
+        super(nombre, precio, cantidad);
         this.tamanio = tamanio;
     }
-
     
-    
-    public String getTamanio() {
-        return tamanio;
-    }
-
-    public void setTamanio(String tamanio) {
-        this.tamanio = tamanio;
-    }
-
-    public Long getIdproducto() {
-        return idproducto;
-    }
-
-    public void setIdproducto(Long idproducto) {
-        this.idproducto = idproducto;
-    }
-
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.idproducto != null ? super.idproducto.hashCode() : 0);
+        hash += (idproducto != null ? idproducto.hashCode() : 0);
         return hash;
     }
 
@@ -64,7 +48,7 @@ public class ProductoPreparado extends Producto implements Serializable {
             return false;
         }
         ProductoPreparado other = (ProductoPreparado) object;
-        if ((super.idproducto== null && super.idproducto != null) || (super.idproducto != null && !super.idproducto.equals(super.idproducto))) {
+        if ((this.idproducto == null && other.idproducto != null) || (this.idproducto != null && !this.idproducto.equals(other.idproducto))) {
             return false;
         }
         return true;
@@ -72,7 +56,8 @@ public class ProductoPreparado extends Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.ProductoPreparado[ id=" + super.idproducto + " ]";
+        return "ProductoPreparado{" + "tamanio=" + tamanio + '}';
     }
-    
+
+   
 }

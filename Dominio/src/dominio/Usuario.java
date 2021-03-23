@@ -6,19 +6,16 @@
 package dominio;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
 @Entity
 @Table(name = "usuario")
@@ -39,9 +36,6 @@ public class Usuario implements Serializable {
     private String nombreUsuario;
     @Column(name = "contrasenia")
     private String contrasenia;
-    
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "usuarioid")
-    private List<Pedido> pedidos;
 
     public Usuario() {
     }
@@ -54,13 +48,13 @@ public class Usuario implements Serializable {
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
     }
-    
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Usuario(String nombre, String apellido, String telefono, String nombreUsuario, String contrasenia) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasenia = contrasenia;
     }
 
     public String getNombre() {
@@ -102,7 +96,16 @@ public class Usuario implements Serializable {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -125,9 +128,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + '}';
+        return "dominio.Usuario[ id=" + id + " ]";
     }
-
-    
     
 }

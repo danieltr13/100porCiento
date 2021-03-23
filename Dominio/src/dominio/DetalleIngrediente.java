@@ -17,9 +17,8 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Alfon
+ * @author MSI GF63
  */
-
 @Entity
 @Table(name="detalleIngrediente")
 public class DetalleIngrediente implements Serializable {
@@ -32,22 +31,28 @@ public class DetalleIngrediente implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumn(name="idingrediente")
-    @Column(name="ingredienteid",nullable = false)
-    private Ingrediente ingredienteid;
+    private Ingrediente ingrediente;
     
     @ManyToOne(optional = false)
     @JoinColumn(name="idproducto")
-    @Column(name="productoid")
-    private Producto productoid;
+    private Producto producto;
 
-    
-    public DetalleIngrediente() {
+    public Ingrediente getIngrediente() {
+        return ingrediente;
     }
 
-    public DetalleIngrediente(Ingrediente ingredienteid, Producto productoid) {
-        this.ingredienteid = ingredienteid;
-        this.productoid = productoid;
+    public void setIngrediente(Ingrediente ingrediente) {
+        this.ingrediente = ingrediente;
     }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     
     public Long getId() {
         return id;
@@ -55,22 +60,6 @@ public class DetalleIngrediente implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    
-    public Ingrediente getIngredienteid() {
-        return ingredienteid;
-    }
-
-    public void setIngredienteid(Ingrediente ingredienteid) {
-        this.ingredienteid = ingredienteid;
-    }
-
-    public Producto getProductoid() {
-        return productoid;
-    }
-
-    public void setProductoid(Producto productoid) {
-        this.productoid = productoid;
     }
 
     @Override
@@ -95,7 +84,7 @@ public class DetalleIngrediente implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.detalleIngrediente[ id=" + id + " ]";
+        return "DetalleIngrediente{" + "id=" + id + ", ingrediente=" + ingrediente + ", producto=" + producto + '}';
     }
-    
+
 }
