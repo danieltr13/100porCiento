@@ -51,6 +51,14 @@ public class DetallePedido implements Serializable {
         this.pedido = pedido;
         this.producto = producto;
     }
+    
+    public DetallePedido(Integer linea, Integer cantidad, Float total, Pedido pedido, Producto producto) {
+        this.linea = linea;
+        this.cantidad = cantidad;
+        this.total = total;
+        this.pedido = pedido;
+        this.producto = producto;
+    }
 
     public DetallePedido() {
     }
@@ -128,7 +136,7 @@ public class DetallePedido implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.DetallePedido[ id=" + id + " ]";
+        return "DetallePedido{" + "id=" + id + ", linea=" + linea + ", cantidad=" + cantidad + ", total=" + total + ", pedido=" + pedido.getId() + ", producto=" + producto.getId() + '}';
     }
     
 }

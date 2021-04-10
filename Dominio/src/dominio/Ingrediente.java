@@ -6,6 +6,7 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,6 +39,7 @@ public class Ingrediente implements Serializable {
     protected List<DetalleIngrediente> productos;
 
     public Ingrediente() {
+        this.productos= new ArrayList<>();
     }
 
     public Ingrediente(Long id, String nombre, Float precioExtra, List<DetalleIngrediente> productos) {
@@ -48,9 +50,9 @@ public class Ingrediente implements Serializable {
     }
 
     public Ingrediente(String nombre, Float precioExtra) {
+        this();
         this.nombre = nombre;
         this.precioExtra = precioExtra;
-        this.productos = productos;
     }
 
     public Long getId() {

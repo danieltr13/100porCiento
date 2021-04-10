@@ -6,13 +6,20 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import static javax.persistence.DiscriminatorType.STRING;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +29,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="producto")
+@Inheritance(strategy=SINGLE_TABLE)
+//@DiscriminatorColumn(name="DISC", discriminatorType=STRING,length=20)
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,8 +42,12 @@ public class Producto implements Serializable {
     protected String nombre;
     @Column(name="precio", nullable = false,length = 15)
     protected Float precio;
+    //quitar
     @Column(name="cantidad", length = 12)
     protected Integer cantidad;
+    @Column(name = "categoria", length = 15)
+    @Enumerated(EnumType.STRING)
+    protected Categoria categoria;
     
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "producto")
     protected List<DetalleIngrediente> detalleIngredientes;
@@ -43,6 +56,7 @@ public class Producto implements Serializable {
     protected List<DetallePedido> detallePedidos;
 
     public Producto(Long idproducto, String nombre, Float precio, Integer cantidad) {
+        this();
         this.idproducto = idproducto;
         this.nombre = nombre;
         this.precio = precio;
@@ -50,12 +64,26 @@ public class Producto implements Serializable {
     }
 
     public Producto() {
+        this.detalleIngredientes= new ArrayList<>();
+        this.detallePedidos= new ArrayList<>();
     }
 
-    public Producto(String nombre, Float precio, Integer cantidad) {
+    public Producto(String nombre, Float precio, Integer cantidad, Categoria categoria) {
+        this();
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.categoria= categoria;
+    }
+
+    public Producto(Long idproducto, String nombre, Float precio, Integer cantidad, Categoria categoria, List<DetalleIngrediente> detalleIngredientes, List<DetallePedido> detallePedidos) {
+        this.idproducto = idproducto;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.categoria = categoria;
+        this.detalleIngredientes = detalleIngredientes;
+        this.detallePedidos = detallePedidos;
     }
     
     public Long getId() {
@@ -105,6 +133,10 @@ public class Producto implements Serializable {
     public void setDetalleIngredientes(List<DetalleIngrediente> detalleIngredientes) {
         this.detalleIngredientes = detalleIngredientes;
     }
+    
+    public void setDetalleIngrediente(DetalleIngrediente dIngrediente) {
+        this.detalleIngredientes.add(dIngrediente);
+    }
 
     public List<DetallePedido> getDetallePedidos() {
         return detallePedidos;
@@ -112,6 +144,14 @@ public class Producto implements Serializable {
 
     public void setDetallePedidos(List<DetallePedido> detallePedidos) {
         this.detallePedidos = detallePedidos;
+    }
+
+    public Categoria getEstado() {
+        return categoria;
+    }
+
+    public void setEstado(Categoria estado) {
+        this.categoria = estado;
     }
 
     @Override

@@ -22,8 +22,8 @@ public class ProductoListo extends Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public ProductoListo(String nombre, Float precio, Integer cantidad) {
-        super(nombre, precio, cantidad);
+    public ProductoListo(String nombre, Float precio, Integer cantidad, Categoria categoria) {
+        super(nombre, precio, cantidad, categoria);
     }
 
     public ProductoListo() {

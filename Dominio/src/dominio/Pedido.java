@@ -6,6 +6,7 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -51,6 +52,7 @@ public class Pedido implements Serializable {
     private List<DetallePedido> detallePedido;
 
     public Pedido() {
+        this.detallePedido= new ArrayList<>();
     }
 
     public Pedido(Long id, Float total, Estado estado, Cliente cliente, Usuario usuario, List<DetallePedido> detallePedido) {
@@ -62,12 +64,12 @@ public class Pedido implements Serializable {
         this.detallePedido = detallePedido;
     }
 
-    public Pedido(Float total, Estado estado, Cliente cliente, Usuario usuario, List<DetallePedido> detallePedido) {
+    public Pedido(Float total, Estado estado, Cliente cliente, Usuario usuario) {
+        this();
         this.total = total;
         this.estado = estado;
         this.cliente = cliente;
         this.usuario = usuario;
-        this.detallePedido = detallePedido;
     }
 
     public Long getId() {
@@ -118,7 +120,10 @@ public class Pedido implements Serializable {
         this.detallePedido = detallePedido;
     }
     
-
+    public void addDetalle(DetallePedido detallePedido) {
+        this.detallePedido.add(detallePedido);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

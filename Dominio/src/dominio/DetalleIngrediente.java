@@ -84,7 +84,7 @@ public class DetalleIngrediente implements Serializable {
 
     @Override
     public String toString() {
-        return "DetalleIngrediente{" + "id=" + id + ", ingrediente=" + ingrediente + ", producto=" + producto + '}';
+        return "DetalleIngrediente{" + "id=" + id + ", ingrediente=" + ingrediente.getId() + ", producto=" + producto.getId() + '}';
     }
 
 }

@@ -128,7 +128,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "dominio.Usuario[ id=" + id + " ]";
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + '}';
     }
-    
+
 }

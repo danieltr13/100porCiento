@@ -6,6 +6,7 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,6 +40,27 @@ public class Cliente implements Serializable {
     private String domicilio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Pedido> pedidos;
+
+    public Cliente() {
+        this.pedidos= new ArrayList<>();
+    }
+
+    public Cliente(Long id, String nombre, String apellido, String telefono, String domicilio, List<Pedido> pedidos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.domicilio = domicilio;
+        this.pedidos = pedidos;
+    }
+
+    public Cliente(String nombre, String apellido, String telefono, String domicilio) {
+        this();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.domicilio = domicilio;
+    }
 
     public String getNombre() {
         return nombre;
@@ -78,6 +100,10 @@ public class Cliente implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+    
+    public void addPedido (Pedido pedido) {
+        this.pedidos.add(pedido);
     }
     
     public Long getId() {
