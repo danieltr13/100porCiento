@@ -33,8 +33,13 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //INegocio fachada= new FNegocio();
-        IngredienteRepository pr = new IngredienteRepository();
+        INegocio fachada= new FNegocio();
+        ArrayList pedidos= fachada.obtenerPedidosUsuario("Daniel");
+        for (Object pedido : pedidos) {
+            System.out.println(pedido);
+        }
+        
+        //IngredienteRepository pr = new IngredienteRepository();
 //        Ingrediente ingrediente= new Ingrediente("Leche", 0f);
 //        pr.guardar(ingrediente);
         //Ingrediente in = pr.buscarporID(1);

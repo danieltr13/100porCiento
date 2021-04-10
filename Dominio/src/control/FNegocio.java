@@ -152,10 +152,28 @@ public class FNegocio implements INegocio{
     public ArrayList<Pedido> obtenerPedidos() {
         return controlPedido.obtenerPedidos();
     }
+    
+    
+    @Override
+    public ArrayList<Pedido> obtenerPedidosUsuario(String usuario) {
+        return controlPedido.obtenerPedidos();
+    }
+    
+    @Override
+    public ArrayList<Pedido> obtenerPedidosCliente(String cliente) {
+        return controlPedido.obtenerPedidos();
+    }
+    
+    @Override
+    public ArrayList<Pedido> obtenerPedidosEstado(String estado) {
+        return controlPedido.obtenerPedidos();
+    }
 
     @Override
     public ArrayList<Usuario> obtenerUsuarios() {
         return controlUsuario.obtenerUsuarios();
     }
     
+    
+     
 }
