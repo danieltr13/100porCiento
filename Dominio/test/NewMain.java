@@ -20,6 +20,8 @@ import dominio.Ingrediente;
 import dominio.Pedido;
 import dominio.Producto;
 import dominio.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -79,35 +81,36 @@ public class NewMain {
 //        usuarioRepository.guardar(usuario);
 //        usuarioRepository.guardar(usuario2);
         //System.out.println(usuarioRepository.buscarporID(2));
-       Usuario user = usuarioRepository.buscarporID(1);
-        
-        
-        ClienteRepository clienteRepository= new ClienteRepository();
-        
-        Cliente cliente= new Cliente("Local", "Local", "Local", "Local");
-        
+//       Usuario user = usuarioRepository.buscarporID(2);
+//        
+//        
+//        ClienteRepository clienteRepository= new ClienteRepository();
+//        
+//        Cliente cliente= new Cliente("Jc", "Cj","121313", "Morelia");
+
         //clienteRepository.guardar(cliente);
+//        cliente= clienteRepository.buscarporID(3);
+//        
+//        Producto producto = producR.buscarporID(1);
+//        Producto producto2 = producR.buscarporID(2);
+//        
+//        float total = producto.getPrecio() + producto2.getPrecio();
+//        
+        PedidoRepository pedidoRepository = new PedidoRepository();
+//        Pedido pedido = new Pedido(total, Estado.ESPERANDO, cliente, user);
+//        cliente.addPedido(pedido);
+//        DetallePedido dt = new DetallePedido(1, 2, producto.getPrecio()*2, pedido, producto);
+//        DetallePedido dt2 = new DetallePedido(2, 2, producto2.getPrecio()*2, pedido, producto2);
+//        pedido.addDetalle(dt);
+//        pedido.addDetalle(dt2);
+//        pedidoRepository.guardar(pedido);
+
+        List<Pedido> ped = pedidoRepository.buscarComo(Estado.PREPARANDO.toString());
+        //DetallePedido pedido = ped.getDetallePedido().get(0);
+        System.out.println(ped);
         
-        cliente= clienteRepository.buscarporID(2);
-        
-        Producto producto = producR.buscarporID(1);
-        Producto producto2 = producR.buscarporID(2);
-        
-        float total = producto.getPrecio() + producto2.getPrecio();
-        
-        PedidoRepository pedidoRepository= new PedidoRepository();
-        /*Pedido pedido = new Pedido(total, Estado.ESPERANDO, cliente, user);
-        cliente.addPedido(pedido);
-        DetallePedido dt = new DetallePedido(1, 2, producto.getPrecio()*2, pedido, producto);
-        pedido.addDetalle(dt);
-        pedidoRepository.guardar(pedido);
-        */
-        Pedido ped = pedidoRepository.buscarporID(2);
-        DetallePedido pedido = ped.getDetallePedido().get(0);
-        System.out.println(pedido);
-        
-        ped.setEstado(Estado.PREPARANDO);
-        pedidoRepository.actualizar(ped);
+        //ped.setEstado(Estado.PREPARANDO);
+        //pedidoRepository.actualizar(ped);
     }
 
 }

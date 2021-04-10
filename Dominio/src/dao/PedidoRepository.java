@@ -7,7 +7,6 @@ package dao;
 
 import dominio.Ingrediente;
 import dominio.Pedido;
-import dominio.Producto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -92,13 +91,13 @@ public class PedidoRepository extends BaseRepository<Pedido> {
     }
 
     @Override
-    public List<Pedido> buscarComo(String nombre) {
+    public List<Pedido> buscarComo(String estado) {
         EntityManager em = this.createEntityManager();
         em.getTransaction().begin();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Pedido> cq = builder.createQuery(Pedido.class);
         Root<Pedido> root = cq.from(Pedido.class);
-        cq = cq.select(root).where(builder.like(root.get("nombre"), "%" + nombre + "%"));
+        cq = cq.select(root).where(builder.like(root.get("estado"), "%" + estado + "%"));
         TypedQuery<Pedido> typedQuery = em.createQuery(cq);
         ArrayList<Pedido> pedidos = new ArrayList<>(typedQuery.getResultList());
         em.getTransaction().commit();
@@ -106,5 +105,23 @@ public class PedidoRepository extends BaseRepository<Pedido> {
         return pedidos;
     }
     
+    public ArrayList<Pedido> buscarPorCliente(String cliente) {
+        EntityManager entityManager = this.createEntityManager();
+        List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e INNER JOIN e.cliente t where t.nombre Like '%"+cliente+"%'").getResultList();
+        return new ArrayList<>(p);
+    }
+    
+    public ArrayList<Pedido> buscarPorUsuario(String usuario) {
+        EntityManager entityManager = this.createEntityManager();
+        List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e INNER JOIN e.usuario t where t.nombre Like '%"+usuario+"%'").getResultList();
+        return new ArrayList<>(p);
+    }
+        
+    //Por si después o ocupo, por si after ok
+    public ArrayList<Pedido> buscarPorUsuaridID(long idusuario) {
+        EntityManager entityManager = this.createEntityManager();
+        List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e INNER JOIN e.usuario t where t.id="+idusuario).getResultList();
+        return new ArrayList<>(p);
+    }
     
 }

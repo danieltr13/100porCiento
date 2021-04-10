@@ -62,7 +62,6 @@ public class DetallePedido implements Serializable {
 
     public DetallePedido() {
     }
-
     
     public Long getId() {
         return id;
