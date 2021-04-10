@@ -48,6 +48,8 @@ public class Producto implements Serializable {
     @Column(name = "categoria", length = 15)
     @Enumerated(EnumType.STRING)
     protected Categoria categoria;
+    @Column (name="descripcion")
+    protected String descripcion;
     
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "producto")
     protected List<DetalleIngrediente> detalleIngredientes;

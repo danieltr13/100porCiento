@@ -104,7 +104,7 @@ public class ProductoRepository extends BaseRepository<Producto> {
         return productos;
     }
     
-    public List<Producto> buscarCategoria(Categoria categoria) {
+    public ArrayList<Producto> buscarCategoria(String categoria) {
         EntityManager em = this.createEntityManager();
         em.getTransaction().begin();
         CriteriaBuilder builder = em.getCriteriaBuilder();

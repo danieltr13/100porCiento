@@ -6,11 +6,15 @@
 package frames;
 
 import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
+import control.FNegocio;
+import control.INegocio;
+import dominio.Producto;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.GroupLayout;
@@ -25,7 +29,11 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
  * @author fermi
  */
 public class Pedido extends javax.swing.JFrame {
-
+    
+    private INegocio fnegocios;
+    //
+    private ArrayList<Producto> productsCategory;
+    private ArrayList<Producto> productsAdded;
     private int productoPedidoAltura = 1;
     private int productoAltura = 630;
     private int productosPedido;
@@ -54,13 +62,20 @@ public class Pedido extends javax.swing.JFrame {
         this.modifyJPanelProducts();
         this.modifyJscroll();
         this.modifyScrollsAdded();
-        for (int i = 0; i < 15; i++) {
-            addPanels();
-        }
-        for (int i = 0; i < 8; i++) {
-            addPanelsY();
-        }
+//        for (int i = 0; i < 15; i++) {
+//            addPanels();
+//        }
+//        for (int i = 0; i < 8; i++) {
+//            addPanelsY();
+//        }
+        this.initialize();
         this.setResizable(false);
+    }
+    
+    private void initialize(){
+        this.fnegocios= new FNegocio();
+        this.productsCategory= new ArrayList<>();
+        this.productsAdded= new ArrayList<>();
     }
 
     //Cambiar color y ancho
@@ -116,7 +131,7 @@ public class Pedido extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
+        lblSandwiches = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -270,10 +285,15 @@ public class Pedido extends javax.swing.JFrame {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(98, 102, 102));
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sandwich.PNG"))); // NOI18N
-        jLabel15.setText(" Sandwiches");
+        lblSandwiches.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        lblSandwiches.setForeground(new java.awt.Color(98, 102, 102));
+        lblSandwiches.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sandwich.PNG"))); // NOI18N
+        lblSandwiches.setText(" Sandwiches");
+        lblSandwiches.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSandwichesMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -281,14 +301,14 @@ public class Pedido extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSandwiches, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSandwiches, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -800,6 +820,22 @@ public class Pedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanel6MouseExited
 
+    private void lblSandwichesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSandwichesMouseClicked
+        getProductsCategory("SANDWICHES");
+    }//GEN-LAST:event_lblSandwichesMouseClicked
+    
+    private void getProductsCategory(String category){
+        this.productsCategory= fnegocios.obtenerProductosCategoria(category);
+        if(!productsCategory.isEmpty()){
+            for (Producto producto : productsCategory) {
+                addPanels();
+                //
+                addPanel(x, y, producto.getNombre(),producto.getPrecio(),producto.getNombre());
+            }
+        }
+    }
+    
+    
     private void addPanels() {
         byte aux = 0;
         String des = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus elementum eros nec congue. In sit amet neque erat. Pellentesque suscipit sem tempor leo finibus rhoncus.";
@@ -1175,7 +1211,6 @@ public class Pedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1221,6 +1256,7 @@ public class Pedido extends javax.swing.JFrame {
     private javax.swing.JPanel jpProductsAd;
     private javax.swing.JPanel jpanelProducts;
     private javax.swing.JScrollPane jscrollProducts;
+    private javax.swing.JLabel lblSandwiches;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -6,6 +6,7 @@
 package control;
 
 import dao.ProductoRepository;
+import dominio.Categoria;
 import dominio.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +43,7 @@ public class ControlProducto {
         return productoRepository.buscarComo(nombre);
     }
     
-    
+    public ArrayList<Producto> obtenerProductosCategoria(String categoria){
+        return productoRepository.buscarCategoria(categoria);
+    }
 }

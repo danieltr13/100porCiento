@@ -174,6 +174,9 @@ public class FNegocio implements INegocio{
         return controlUsuario.obtenerUsuarios();
     }
     
-    
+    @Override
+    public ArrayList<Producto> obtenerProductosCategoria(String categoria){
+        return controlProducto.obtenerProductosCategoria(categoria);
+    }
      
 }
