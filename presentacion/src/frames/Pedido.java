@@ -830,7 +830,7 @@ public class Pedido extends javax.swing.JFrame {
             for (Producto producto : productsCategory) {
                 addPanels();
                 //
-                addPanel(x, y, producto.getNombre(),producto.getPrecio(),producto.getNombre());
+              //  addPanel(x, y, producto.getNombre(),producto.getPrecio(),producto.getNombre());
             }
         }
     }
