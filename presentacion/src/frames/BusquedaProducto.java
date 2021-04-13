@@ -21,13 +21,14 @@ import javax.swing.table.DefaultTableModel;
 public class BusquedaProducto extends javax.swing.JFrame {
 
     private INegocio fnegocios;
-    List<Pedido> pedidos;
+    private List<Pedido> pedidos;
 
     /**
      * Creates new form BusquedaProducto
      */
     public BusquedaProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
         fnegocios = new FNegocio();
         pedidos = fnegocios.obtenerPedidos();
         this.cargarTabla();
@@ -195,13 +196,17 @@ public class BusquedaProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxTiposActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+       this.eliminarPedido();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
        this.cargarPedido();
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void obtenerPedidos(){
+        this.pedidos=fnegocios.obtenerPedidos();
+    }
+    
     private void eliminarPedido(){
         int fila = this.tblPedidos.getSelectedRow();
         if (fila == -1) {
@@ -214,6 +219,9 @@ public class BusquedaProducto extends javax.swing.JFrame {
             Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
             if (pedido != null) {
                 fnegocios.eliminarPedido(pedido.getId());
+                JOptionPane.showMessageDialog(rootPane,"Pedido Eliminado");
+                this.obtenerPedidos();
+                this.cargarTabla();
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -264,6 +272,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
             if (pedido != null) {
                 PedidoF p = new PedidoF();
                 p.setProductsAdded(new ArrayList<>(pedido.getDetallePedido()));
+                p.setPedidoActualizado(pedido);
                 p.setVisible(true);
                 this.dispose();
             } else {

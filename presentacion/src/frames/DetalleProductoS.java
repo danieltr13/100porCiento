@@ -21,6 +21,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
      */
     public DetalleProductoS() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -84,6 +85,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         lblProducto.setForeground(new java.awt.Color(51, 51, 51));
         lblProducto.setText("Producto");
 
+        txaDetalle.setEditable(false);
         txaDetalle.setColumns(20);
         txaDetalle.setRows(5);
         jScrollPane1.setViewportView(txaDetalle);

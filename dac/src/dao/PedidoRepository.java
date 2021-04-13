@@ -56,9 +56,9 @@ public class PedidoRepository extends BaseRepository<Pedido> {
     public boolean eliminar(long id) {
         EntityManager em = this.createEntityManager();
         em.getTransaction().begin();
-        Ingrediente ingrediente = em.find(Ingrediente.class, id);
-        if (ingrediente != null) {
-            em.remove(ingrediente);
+        Pedido pedido = em.find(Pedido.class, id);
+        if (pedido != null) {
+            em.remove(pedido);
             em.getTransaction().commit();
             em.close();
             return true;

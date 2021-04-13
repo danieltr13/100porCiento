@@ -36,9 +36,10 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
  * @author fermi
  */
 public class PedidoF extends javax.swing.JFrame {
+    private Pedido pedidoActualizado;
     private Cliente clienteLocal;
     private Usuario usuario;
-    //Problemas
+    
     private INegocio fnegocios;
     private DetalleProductoS detalleProductoS;
     //
@@ -133,6 +134,14 @@ public class PedidoF extends javax.swing.JFrame {
         this.cargarProductosAgregados();
     }
 
+    public Pedido getPedidoActualizado() {
+        return pedidoActualizado;
+    }
+
+    public void setPedidoActualizado(Pedido pedidoActualizado) {
+        this.pedidoActualizado = pedidoActualizado;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,7 +179,7 @@ public class PedidoF extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         lblCafés = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        lblCategoria = new javax.swing.JLabel();
         jscrollProducts = new javax.swing.JScrollPane();
         jpanelProducts = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -210,6 +219,11 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 23)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/dona32px.png"))); // NOI18N
         jLabel1.setText("100%");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 13, -1, 43));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/flecha16.png"))); // NOI18N
@@ -532,9 +546,9 @@ public class PedidoF extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(221, 221, 221), 2, true));
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(62, 67, 67));
-        jLabel8.setText("Jugos");
+        lblCategoria.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
+        lblCategoria.setForeground(new java.awt.Color(62, 67, 67));
+        lblCategoria.setText("Categoría");
 
         jscrollProducts.setBackground(new java.awt.Color(0, 0, 0));
         jscrollProducts.setForeground(new java.awt.Color(255, 255, 255));
@@ -565,7 +579,7 @@ public class PedidoF extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel8)
+                .addComponent(lblCategoria)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jscrollProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -573,7 +587,7 @@ public class PedidoF extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel8)
+                .addComponent(lblCategoria)
                 .addGap(18, 18, 18)
                 .addComponent(jscrollProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE))
         );
@@ -601,13 +615,13 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel13.setText("Entregar en: ");
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel14.setText("Calle Miguel Hidalgo y Carretera 300");
+        jLabel14.setText("..............");
 
         jLabel31.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel31.setText("Teléfono:");
 
         jLabel32.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel32.setText("6681521275");
+        jLabel32.setText("...............");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -621,11 +635,11 @@ public class PedidoF extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel31)
-                            .addComponent(jLabel32))
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -862,20 +876,38 @@ public class PedidoF extends javax.swing.JFrame {
 
     private void lblSandwichesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSandwichesMouseClicked
         getProductsCategory("sandwiches");
+        this.lblCategoria.setText("Sandwiches");
     }//GEN-LAST:event_lblSandwichesMouseClicked
 
     private void lblLicuadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLicuadosMouseClicked
         getProductsCategory("licuados");
+        this.lblCategoria.setText("Licuados");
     }//GEN-LAST:event_lblLicuadosMouseClicked
 
     private void lblFrappesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFrappesMouseClicked
         getProductsCategory("frappes");
+        this.lblCategoria.setText("Frappes");
     }//GEN-LAST:event_lblFrappesMouseClicked
 
     private void btnAddOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddOrdenMouseClicked
-        this.addPedido();
+        if(pedidoActualizado==null){
+            this.addPedido();
+        }else{
+            this.actualizarPedido();
+        }
     }//GEN-LAST:event_btnAddOrdenMouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+       this.regresarAlMenu();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void regresarAlMenu(){
+        MenuPedidos menu= new MenuPedidos();
+        this.productsAdded=new ArrayList<>();
+        this.dispose();
+        menu.setVisible(true);
+    }
+    
     private void addPedido(){
         Pedido pedido= new Pedido(subtotal, Estado.ESPERANDO, clienteLocal, usuario);
         setPedidoToDetails(pedido);
@@ -883,6 +915,18 @@ public class PedidoF extends javax.swing.JFrame {
         System.out.println(pedido);
         if(fnegocios.guardarPedido(pedido)){
             JOptionPane.showMessageDialog(rootPane,"Pedido guardado");
+            limpiarPaneles();
+            this.pedidoActualizado=null;
+        }
+        
+    }
+    
+    private void actualizarPedido(){
+        setPedidoToDetails(pedidoActualizado);
+        pedidoActualizado.setDetallePedido(productsAdded);
+        System.out.println(pedidoActualizado);
+        if(fnegocios.actualizarPedido(pedidoActualizado)){
+            JOptionPane.showMessageDialog(rootPane,"Pedido Actualizado");
             limpiarPaneles();
         }
         
@@ -1370,7 +1414,6 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1393,6 +1436,7 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JPanel jpanelProducts;
     private javax.swing.JScrollPane jscrollProducts;
     private javax.swing.JLabel lblCafés;
+    private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblFrappes;
     private javax.swing.JLabel lblJugos;
     private javax.swing.JLabel lblLicuados;
