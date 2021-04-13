@@ -5,17 +5,32 @@
  */
 package frames;
 
+import control.FNegocio;
+import control.INegocio;
+import dominio.DetallePedido;
+import dominio.Pedido;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MSI GF63
  */
 public class BusquedaProducto extends javax.swing.JFrame {
 
+    private INegocio fnegocios;
+    List<Pedido> pedidos;
+
     /**
      * Creates new form BusquedaProducto
      */
     public BusquedaProducto() {
         initComponents();
+        fnegocios = new FNegocio();
+        pedidos = fnegocios.obtenerPedidos();
+        this.cargarTabla();
     }
 
     /**
@@ -33,10 +48,10 @@ public class BusquedaProducto extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         cbxTipos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPedidos = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -65,10 +80,10 @@ public class BusquedaProducto extends javax.swing.JFrame {
         });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(230, 99, 57))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(230, 99, 57))); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidos.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -76,25 +91,42 @@ public class BusquedaProducto extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "productos", "total", "cliente"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblPedidos);
+        if (tblPedidos.getColumnModel().getColumnCount() > 0) {
+            tblPedidos.getColumnModel().getColumn(0).setResizable(false);
+            tblPedidos.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(230, 99, 57));
         jButton1.setText("Buscar");
 
-        jButton2.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(230, 99, 57));
-        jButton2.setText("Editar");
-
-        jButton3.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(230, 99, 57));
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(230, 99, 57));
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(230, 99, 57));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -107,9 +139,9 @@ public class BusquedaProducto extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnEditar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3))
+                        .addComponent(btnEliminar))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,8 +171,8 @@ public class BusquedaProducto extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
+                            .addComponent(btnEliminar)
+                            .addComponent(btnEditar))
                         .addContainerGap())))
         );
 
@@ -162,9 +194,84 @@ public class BusquedaProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxTiposActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       this.cargarPedido();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void eliminarPedido(){
+        int fila = this.tblPedidos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un Pedido.",
+                    "Precaución", JOptionPane.WARNING_MESSAGE);
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) this.tblPedidos.getModel();
+            Long idPedido = (Long) modelo.getValueAt(fila, 0);
+            //obtenerlo de memoria
+            Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
+            if (pedido != null) {
+                fnegocios.eliminarPedido(pedido.getId());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    private void cargarTabla() {
+        if (pedidos != null) {
+            DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
+            modelo.setRowCount(0);
+            for (Pedido c : pedidos) {
+                modelo.addRow(this.toArray(c));
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Sin resultados.",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private Object[] toArray(Pedido p) {
+        return new Object[]{
+            p.getId(),
+            this.getTotalProducts(p),
+            p.getTotal(),
+            p.getCliente().getNombre()
+        };
+    }
+
+    private int getTotalProducts(Pedido p) {
+        int total = 0;
+        for (DetallePedido detallePedido : p.getDetallePedido()) {
+            total += detallePedido.getCantidad();
+        }
+        //System.out.println(p.getDetallePedido().get(0).getCantidad());
+        return total;
+    }
+
+    public void cargarPedido() {
+        int fila = this.tblPedidos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un Pedido.",
+                    "Precaución", JOptionPane.WARNING_MESSAGE);
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) this.tblPedidos.getModel();
+            Long idPedido = (Long) modelo.getValueAt(fila, 0);
+            //obtenerlo de memoria
+            Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
+            if (pedido != null) {
+                PedidoF p = new PedidoF();
+                p.setProductsAdded(new ArrayList<>(pedido.getDetallePedido()));
+                p.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -202,15 +309,15 @@ public class BusquedaProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cbxTipos;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
 }
