@@ -5,6 +5,8 @@
  */
 package frames;
 
+import java.awt.Color;
+
 /**
  *
  * @author fermi
@@ -17,7 +19,7 @@ public class MenuPedidos extends javax.swing.JFrame {
     public MenuPedidos() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -79,6 +81,12 @@ public class MenuPedidos extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jpnAgregarMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jpnAgregarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jpnAgregarMouseExited(evt);
+            }
         });
 
         iconAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Chef_icon-icons.com_53212 (2).png"))); // NOI18N
@@ -123,6 +131,12 @@ public class MenuPedidos extends javax.swing.JFrame {
         jpnConsultar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jpnConsultarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jpnConsultarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jpnConsultarMouseExited(evt);
             }
         });
 
@@ -222,6 +236,22 @@ public class MenuPedidos extends javax.swing.JFrame {
     private void lblConsultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultarMouseClicked
         mostrarConsultar();
     }//GEN-LAST:event_lblConsultarMouseClicked
+
+    private void jpnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnAgregarMouseExited
+        jpnAgregar.setBackground(Color.white);
+    }//GEN-LAST:event_jpnAgregarMouseExited
+
+    private void jpnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnAgregarMouseEntered
+        jpnAgregar.setBackground(new Color(250, 190, 182));
+    }//GEN-LAST:event_jpnAgregarMouseEntered
+
+    private void jpnConsultarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnConsultarMouseEntered
+        jpnConsultar.setBackground(new Color(250, 190, 182));
+    }//GEN-LAST:event_jpnConsultarMouseEntered
+
+    private void jpnConsultarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnConsultarMouseExited
+        jpnConsultar.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jpnConsultarMouseExited
 
     private void mostrarAgregar() {
         PedidoF pedido = new PedidoF();
