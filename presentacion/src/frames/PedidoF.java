@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -76,17 +77,12 @@ public class PedidoF extends javax.swing.JFrame {
         this.modifyJPanelProducts();
         this.modifyJscroll();
         this.modifyScrollsAdded();
-//        for (int i = 0; i < 15; i++) {
-//            addPanels();
-//        }
-//        for (int i = 0; i < 8; i++) {
-//            addPanelsY();
-//        }
         this.initialize();
         this.setResizable(false);
         //Agregar bien el usuario
         this.usuario=fnegocios.obtenerUsuarioPorId(1l);
         this.clienteLocal= fnegocios.obtenerClientePorId(2l);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     private void initialize() {
@@ -207,6 +203,11 @@ public class PedidoF extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1400, 805));
         setSize(new java.awt.Dimension(1400, 800));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(248, 248, 248));
@@ -901,6 +902,12 @@ public class PedidoF extends javax.swing.JFrame {
        this.regresarAlMenu();
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+         MenuPedidos menu= new MenuPedidos();
+         menu.setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
     private void regresarAlMenu(){
         MenuPedidos menu= new MenuPedidos();
         this.productsAdded=new ArrayList<>();
@@ -1354,41 +1361,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.subtotal = subtotal;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PedidoF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PedidoF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PedidoF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PedidoF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PedidoF();
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblPostres;

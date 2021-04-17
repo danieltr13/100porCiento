@@ -17,6 +17,7 @@ public class MenuPedidos extends javax.swing.JFrame {
     public MenuPedidos() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
