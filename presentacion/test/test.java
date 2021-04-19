@@ -12,15 +12,15 @@ import java.util.List;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
  * @author Alfon
  */
 public class test {
-
     public static void main(String[] args) {
-        PedidoRepository fachada = new PedidoRepository();
-        List<Pedido> pedidos = fachada.buscarPorUsuaridID(1L);
-        pedidos.forEach(p -> System.out.println(p));
+        FNegocio fachada= new FNegocio();
+        List<Pedido> pedidos= fachada.obtenerPedidosIDUsuario(1L);
+        pedidos.forEach(p-> System.out.println(p));
     }
 }

@@ -49,9 +49,12 @@ public class ControlPedido {
     public ArrayList<Pedido> obtenerPedidosCliente(String cliente){
         return pedidoRepository.buscarPorCliente(cliente);
     }
+    public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario){
+        return pedidoRepository.buscarPorUsuaridID(idUsuario);
+    }
     
     //Verificar si el casteo funciona
-    public ArrayList<Pedido> obtenerPedidosEstado(String estado){
-        return (ArrayList<Pedido>) pedidoRepository.buscarComo(estado);
+    public List<Pedido> obtenerPedidosEstado(String estado){
+        return pedidoRepository.buscarComo(estado);
     }
 }

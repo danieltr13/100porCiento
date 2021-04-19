@@ -148,19 +148,4 @@ public class Pedido implements Serializable {
     public String toString() {
         return "Pedido{" + "id=" + id + ", total=" + total + ", estado=" + estado + ", cliente=" + cliente.getNombre() + ", usuario=" + usuario.getId() + ", detallePedido=" + detallePedido + '}';
     }
-    
-   /* public Object[] toArray() {
-        return new Object[]{
-            this.getId(),
-            this.getTotalProducts(),
-            this.getTotal(),
-            this.getCliente().getNombre()
-        };
-    }
-    
-    private int getTotalProducts(){
-        int total=0;
-        total = detallePedido.stream().map((detallePedido1) -> detallePedido1.getCantidad()).reduce(total, Integer::sum);
-        return total;
-    }*/
 }

@@ -51,6 +51,7 @@ public interface INegocio {
     public ArrayList<Pedido> obtenerPedidosUsuario(String usuario);
     public ArrayList<Pedido> obtenerPedidosCliente(String cliente);
     public ArrayList<Pedido> obtenerPedidosEstado(String estado);
+    public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario);
     //check de cast
     public ArrayList<Producto> obtenerProductosCategoria(String categoria);
 }

@@ -37,10 +37,11 @@ import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
  * @author fermi
  */
 public class PedidoF extends javax.swing.JFrame {
+
     private Pedido pedidoActualizado;
     private Cliente clienteLocal;
     private Usuario usuario;
-    
+
     private INegocio fnegocios;
     private DetalleProductoS detalleProductoS;
     //
@@ -68,7 +69,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.ANCHO = 850;
         this.productos = 0;
         this.productosPedido = 0;
-       
+
         initComponents();
         this.setLocationRelativeTo(null);
         panelX = 0;
@@ -80,8 +81,8 @@ public class PedidoF extends javax.swing.JFrame {
         this.initialize();
         this.setResizable(false);
         //Agregar bien el usuario
-        this.usuario=fnegocios.obtenerUsuarioPorId(1l);
-        this.clienteLocal= fnegocios.obtenerClientePorId(2l);
+        this.usuario = fnegocios.obtenerUsuarioPorId(1l);
+        this.clienteLocal = fnegocios.obtenerClientePorId(2l);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
@@ -353,6 +354,11 @@ public class PedidoF extends javax.swing.JFrame {
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+        });
 
         lblSnacks.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         lblSnacks.setForeground(new java.awt.Color(98, 102, 102));
@@ -382,6 +388,11 @@ public class PedidoF extends javax.swing.JFrame {
         lblJugos.setForeground(new java.awt.Color(98, 102, 102));
         lblJugos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/jugos.PNG"))); // NOI18N
         lblJugos.setText(" Jugos");
+        lblJugos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblJugosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -464,6 +475,11 @@ public class PedidoF extends javax.swing.JFrame {
         LblPostres.setForeground(new java.awt.Color(98, 102, 102));
         LblPostres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/postres.PNG"))); // NOI18N
         LblPostres.setText(" Postres");
+        LblPostres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LblPostresMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -488,6 +504,11 @@ public class PedidoF extends javax.swing.JFrame {
         lblCafés.setForeground(new java.awt.Color(98, 102, 102));
         lblCafés.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cafes.PNG"))); // NOI18N
         lblCafés.setText(" Cafés");
+        lblCafés.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCafésMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -891,82 +912,100 @@ public class PedidoF extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFrappesMouseClicked
 
     private void btnAddOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddOrdenMouseClicked
-        if(pedidoActualizado==null){
+        if (pedidoActualizado == null) {
             this.addPedido();
-        }else{
+        } else {
             this.actualizarPedido();
         }
     }//GEN-LAST:event_btnAddOrdenMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       this.regresarAlMenu();
+        this.regresarAlMenu();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         MenuPedidos menu= new MenuPedidos();
-         menu.setVisible(true);
-         this.dispose();
+        MenuPedidos menu = new MenuPedidos();
+        menu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void regresarAlMenu(){
-        MenuPedidos menu= new MenuPedidos();
-        this.productsAdded=new ArrayList<>();
+    private void lblJugosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJugosMouseClicked
+        getProductsCategory("jugos");
+        this.lblCategoria.setText("Jugos");
+    }//GEN-LAST:event_lblJugosMouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        getProductsCategory("snacks");
+        this.lblCategoria.setText("Snacks");
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void LblPostresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblPostresMouseClicked
+         getProductsCategory("postres");
+        this.lblCategoria.setText("Postres");
+    }//GEN-LAST:event_LblPostresMouseClicked
+
+    private void lblCafésMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCafésMouseClicked
+        getProductsCategory("cafes");
+        this.lblCategoria.setText("Cafés");
+    }//GEN-LAST:event_lblCafésMouseClicked
+
+    private void regresarAlMenu() {
+        MenuPedidos menu = new MenuPedidos();
+        this.productsAdded = new ArrayList<>();
         this.dispose();
         menu.setVisible(true);
     }
-    
-    private void addPedido(){
-        Pedido pedido= new Pedido(subtotal, Estado.ESPERANDO, clienteLocal, usuario);
+
+    private void addPedido() {
+        Pedido pedido = new Pedido(subtotal, Estado.ESPERANDO, clienteLocal, usuario);
         setPedidoToDetails(pedido);
         pedido.setDetallePedido(productsAdded);
-        System.out.println(pedido);
-        if(fnegocios.guardarPedido(pedido)){
-            JOptionPane.showMessageDialog(rootPane,"Pedido guardado");
+        if (fnegocios.guardarPedido(pedido)) {
+            JOptionPane.showMessageDialog(rootPane, "Pedido guardado");
             limpiarPaneles();
-            this.pedidoActualizado=null;
+            this.pedidoActualizado = null;
         }
-        
+
     }
-    
-    private void actualizarPedido(){
+
+    private void actualizarPedido() {
         setPedidoToDetails(pedidoActualizado);
         pedidoActualizado.setDetallePedido(productsAdded);
-        System.out.println(pedidoActualizado);
-        if(fnegocios.actualizarPedido(pedidoActualizado)){
-            JOptionPane.showMessageDialog(rootPane,"Pedido Actualizado");
+        if (fnegocios.actualizarPedido(pedidoActualizado)) {
+            JOptionPane.showMessageDialog(rootPane, "Pedido Actualizado");
             limpiarPaneles();
         }
-        
+
     }
-    
-    private void limpiarPaneles(){
+
+    private void limpiarPaneles() {
         panelX = 0;
         panelY = 5;
-        auxProductos=1;
+        auxProductos = 1;
         productoPedidoAltura = 0;
         this.jpanelProducts.removeAll();
         this.jpanelProducts.updateUI();
         this.jpProductsAd.removeAll();
         this.jpProductsAd.updateUI();
-        
+
     }
-    
-    private void setPedidoToDetails(Pedido pedido){
+
+    private void setPedidoToDetails(Pedido pedido) {
         for (DetallePedido detallePedido : productsAdded) {
             detallePedido.setPedido(pedido);
         }
     }
-    
+
     //Metodo para que dependiendo el tipo de cliente obtenga los datos
-    private void addTypeOfClientToDetails(Cliente cliente){
-        
+    private void addTypeOfClientToDetails(Cliente cliente) {
+
     }
-    
+
     private void getProductsCategory(String category) {
         this.productsCategory = fnegocios.obtenerProductosCategoria(category);
         panelX = 0;
         panelY = 5;
-        auxProductos=1;
+        auxProductos = 1;
         this.jpanelProducts.removeAll();
         this.jpanelProducts.updateUI();
         if (!productsCategory.isEmpty()) {
@@ -1327,7 +1366,7 @@ public class PedidoF extends javax.swing.JFrame {
     }
 
     public void addToList(DetallePedido detallePedido) {
-        detallePedido.setLinea(productsAdded.size()+1);
+        detallePedido.setLinea(productsAdded.size() + 1);
         productsAdded.add(detallePedido);
         cargarProductosAgregados();
     }
@@ -1361,7 +1400,6 @@ public class PedidoF extends javax.swing.JFrame {
         this.subtotal = subtotal;
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblPostres;

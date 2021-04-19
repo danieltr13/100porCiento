@@ -371,6 +371,9 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel10MouseClicked"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -450,6 +453,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=" Jugos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblJugosMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -590,6 +596,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=" Postres"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LblPostresMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -630,6 +639,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value=" Caf&#xe9;s"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCaf&#xe9;sMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

@@ -154,17 +154,17 @@ public class FNegocio implements INegocio {
 
     @Override
     public ArrayList<Pedido> obtenerPedidosUsuario(String usuario) {
-        return controlPedido.obtenerPedidos();
+        return controlPedido.obtenerPedidosUsuario(usuario);
     }
 
     @Override
     public ArrayList<Pedido> obtenerPedidosCliente(String cliente) {
-        return controlPedido.obtenerPedidos();
+        return controlPedido.obtenerPedidosCliente(cliente);
     }
 
     @Override
     public ArrayList<Pedido> obtenerPedidosEstado(String estado) {
-        return controlPedido.obtenerPedidos();
+        return new ArrayList<> (controlPedido.obtenerPedidosEstado(estado));
     }
 
     @Override
@@ -175,6 +175,11 @@ public class FNegocio implements INegocio {
     @Override
     public ArrayList<Producto> obtenerProductosCategoria(String categoria) {
         return controlProducto.obtenerProductosCategoria(categoria);
+    }
+
+    @Override
+    public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario) {
+        return controlPedido.obtenerPedidosIDUsuario(idUsuario);
     }
 
 }

@@ -8,14 +8,19 @@ package frames;
 import dominio.DetalleIngrediente;
 import dominio.DetallePedido;
 import dominio.Producto;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
  * @author MSI GF63
  */
 public class DetalleProductoS extends javax.swing.JFrame {
+
     private Producto product;
     private PedidoF pedido;
+
     /**
      * Creates new form DetalleProducto
      */
@@ -23,6 +28,8 @@ public class DetalleProductoS extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +52,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txaDetalle = new javax.swing.JTextArea();
         lblNotas = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSubTotal = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -71,6 +78,8 @@ public class DetalleProductoS extends javax.swing.JFrame {
 
         jLabel1.setText("subTotal:");
 
+        jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(230, 99, 57));
@@ -94,9 +103,9 @@ public class DetalleProductoS extends javax.swing.JFrame {
         lblNotas.setForeground(new java.awt.Color(51, 51, 51));
         lblNotas.setText("Notas");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtSubTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtSubTotalActionPerformed(evt);
             }
         });
 
@@ -140,7 +149,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
                                 .addGap(7, 7, 7)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -167,7 +176,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAceptar)
@@ -189,52 +198,58 @@ public class DetalleProductoS extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void txtSubTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubTotalActionPerformed
+    }//GEN-LAST:event_txtSubTotalActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         addToListPedidos();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
-    
-    private void validarDatos(){
-        //Tiene que comenzar en 1 js
-        //
-        
+
+    private boolean validarDatos() {
+        if ((Integer)jsCantidad.getValue()<=0) {
+            JOptionPane.showMessageDialog(null, "Ingrese la cantidad deseada","Valor incorrecto",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
-    private void addToListPedidos(){
-        DetallePedido detallePedido= new DetallePedido();
+    private void addToListPedidos() {
+        DetallePedido detallePedido = new DetallePedido();
         //Verificar el casteo
-        detallePedido.setCantidad((Integer)jsCantidad.getValue());
+        if (validarDatos()) {
+            detallePedido.setCantidad((Integer) jsCantidad.getValue());
+        }
         //agregar lo de las notas
-        //detallePedido.set
+        detallePedido.setNota(this.txaNotas.getText());
         detallePedido.setProducto(product);
-        detallePedido.setTotal(detallePedido.getCantidad()*product.getPrecio());
+        detallePedido.setTotal(detallePedido.getCantidad() * product.getPrecio());
         this.pedido.addToList(detallePedido);
         this.dispose();
     }
-            
-    public void mostrarDetalles(){
+     
+    
+    public void mostrarDetalles() {
         this.lblProducto.setText(this.product.getNombre());
         this.txaDetalle.append(getDescription(product));
     }
-    
-    private String getDescription(Producto product){
-        String description="";
+
+    private String getDescription(Producto product) {
+        String description = "";
         for (DetalleIngrediente detalle : product.getDetalleIngredientes()) {
-            description=detalle.getIngrediente().getNombre()+" ";
+            description = detalle.getIngrediente().getNombre() + " ";
         }
         return description;
     }
-    
+
     public Producto getProduct() {
         return product;
     }
@@ -250,8 +265,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
     public void setPedido(PedidoF pedido) {
         this.pedido = pedido;
     }
-    
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -264,11 +278,11 @@ public class DetalleProductoS extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JSpinner jsCantidad;
     private javax.swing.JLabel lblNotas;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JTextArea txaDetalle;
     private javax.swing.JTextArea txaNotas;
+    private javax.swing.JTextField txtSubTotal;
     // End of variables declaration//GEN-END:variables
 }

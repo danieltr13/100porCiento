@@ -34,26 +34,37 @@ public class DetallePedido implements Serializable {
     private Integer cantidad;
     @Column(name = "total", nullable = false)
     private Float total;
-    
+    @Column(name = "nota")
+    private String nota;
     //Agregar lo del detalle
-    
+
     @ManyToOne(optional = false)
-    @JoinColumn(name="idpedido")
+    @JoinColumn(name = "idpedido")
     private Pedido pedido;
-    
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "idproducto")
     private Producto producto;
 
-    public DetallePedido(Long id, Integer linea, Integer cantidad, Float total, Pedido pedido, Producto producto) {
+    public DetallePedido(Long id, Integer linea, String nota, Integer cantidad, Float total, Pedido pedido, Producto producto) {
         this.id = id;
         this.linea = linea;
         this.cantidad = cantidad;
+        this.nota = nota;
         this.total = total;
         this.pedido = pedido;
         this.producto = producto;
     }
-    
+
+    public DetallePedido(Integer linea, Integer cantidad, String nota, Float total, Pedido pedido, Producto producto) {
+        this.linea = linea;
+        this.cantidad = cantidad;
+        this.total = total;
+        this.nota = nota;
+        this.pedido = pedido;
+        this.producto = producto;
+    }
+
     public DetallePedido(Integer linea, Integer cantidad, Float total, Pedido pedido, Producto producto) {
         this.linea = linea;
         this.cantidad = cantidad;
@@ -64,7 +75,7 @@ public class DetallePedido implements Serializable {
 
     public DetallePedido() {
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -113,14 +124,20 @@ public class DetallePedido implements Serializable {
         this.producto = producto;
     }
 
-    
+    public String getNota() {
+        return nota;
+    }
+
+    public void setNota(String nota) {
+        this.nota = nota;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
 
     @Override
     public boolean equals(Object object) {
@@ -137,7 +154,7 @@ public class DetallePedido implements Serializable {
 
     @Override
     public String toString() {
-        return "DetallePedido{" + "id=" + id + ", linea=" + linea + ", cantidad=" + cantidad + ", total=" + total + ", pedido=" + pedido.getId() + ", producto=" + producto.getId() + '}';
+        return "DetallePedido{" + "id=" + id + ", linea=" + linea + ", cantidad=" + cantidad + ", total=" + total + ", nota=" + nota + ", pedido="   + ", producto="  + '}';
     }
-    
+
 }

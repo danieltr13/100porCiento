@@ -48,7 +48,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtxtSearch = new javax.swing.JTextField();
         cbxTipos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidos = new javax.swing.JTable();
@@ -76,7 +76,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
         jLabel3.setText("100%");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 60));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+        jtxtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
 
         cbxTipos.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         cbxTipos.setForeground(new java.awt.Color(230, 99, 57));
@@ -119,6 +119,11 @@ public class BusquedaProducto extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(230, 99, 57));
         jButton1.setText("Buscar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(230, 99, 57));
@@ -156,7 +161,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -171,7 +176,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,24 +208,47 @@ public class BusquedaProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxTiposActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       this.eliminarPedido();
+        this.eliminarPedido();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       this.cargarPedido();
+        this.cargarPedido();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       MenuPedidos menu= new MenuPedidos();
-       menu.setVisible(true);
-       this.dispose();
+        MenuPedidos menu = new MenuPedidos();
+        menu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void obtenerPedidos(){
-        this.pedidos=fnegocios.obtenerPedidos();
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+       
+        switch (cbxTipos.getSelectedIndex()) {
+            case 0:
+                pedidos = fnegocios.obtenerPedidosIDUsuario(Long.valueOf(jtxtSearch.getText()));
+                this.cargarTabla();
+                break;
+            case 1:
+                pedidos=fnegocios.obtenerPedidosCliente(jtxtSearch.getText());
+                this.cargarTabla();
+                break;
+            case 2:
+                pedidos= fnegocios.obtenerPedidosUsuario(jtxtSearch.getText());
+                this.cargarTabla();
+                break;
+            case 3:
+                pedidos= fnegocios.obtenerPedidosEstado(jtxtSearch.getText().toUpperCase());
+                this.cargarTabla();
+            default:
+                break;
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void obtenerPedidos() {
+        this.pedidos = fnegocios.obtenerPedidos();
     }
-    
-    private void eliminarPedido(){
+
+    private void eliminarPedido() {
         int fila = this.tblPedidos.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione un Pedido.",
@@ -231,8 +259,12 @@ public class BusquedaProducto extends javax.swing.JFrame {
             //obtenerlo de memoria
             Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
             if (pedido != null) {
-                fnegocios.eliminarPedido(pedido.getId());
-                JOptionPane.showMessageDialog(rootPane,"Pedido Eliminado");
+                if (fnegocios.eliminarPedido(pedido.getId())) {
+                    JOptionPane.showMessageDialog(rootPane, "Pedido Eliminado");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "No se puede eliminar el pedido\nSu estado ya no es esperando",
+                            "Producto elaborandose", JOptionPane.ERROR_MESSAGE);
+                }
                 this.obtenerPedidos();
                 this.cargarTabla();
             } else {
@@ -241,6 +273,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
             }
         }
     }
+
     private void cargarTabla() {
         if (pedidos != null) {
             DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
@@ -295,7 +328,6 @@ public class BusquedaProducto extends javax.swing.JFrame {
         }
     }
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -306,7 +338,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jtxtSearch;
     private javax.swing.JTable tblPedidos;
     // End of variables declaration//GEN-END:variables
 }
