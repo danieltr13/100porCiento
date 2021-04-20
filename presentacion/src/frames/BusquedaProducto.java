@@ -8,6 +8,7 @@ package frames;
 import control.FNegocio;
 import control.INegocio;
 import dominio.DetallePedido;
+import dominio.Estado;
 import dominio.Pedido;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
 
     private INegocio fnegocios;
     private List<Pedido> pedidos;
+    private Pedido pedidoAux;
 
     /**
      * Creates new form BusquedaProducto
@@ -52,9 +54,10 @@ public class BusquedaProducto extends javax.swing.JFrame {
         cbxTipos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidos = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnCambiarEstado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -88,22 +91,22 @@ public class BusquedaProducto extends javax.swing.JFrame {
         });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10), new java.awt.Color(230, 99, 57))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(230, 99, 57))); // NOI18N
 
         tblPedidos.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "id", "productos", "total", "cliente"
+                "id", "productos", "total", "cliente", "estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -116,12 +119,12 @@ public class BusquedaProducto extends javax.swing.JFrame {
             tblPedidos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jButton1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(230, 99, 57));
-        jButton1.setText("Buscar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        btnBuscar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(230, 99, 57));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -143,28 +146,36 @@ public class BusquedaProducto extends javax.swing.JFrame {
             }
         });
 
+        btnCambiarEstado.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnCambiarEstado.setForeground(new java.awt.Color(230, 99, 57));
+        btnCambiarEstado.setText("Cambiar estado");
+        btnCambiarEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarEstadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCambiarEstado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 30, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -177,7 +188,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(btnBuscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59))
@@ -185,7 +196,8 @@ public class BusquedaProducto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminar)
-                            .addComponent(btnEditar))
+                            .addComponent(btnEditar)
+                            .addComponent(btnCambiarEstado))
                         .addContainerGap())))
         );
 
@@ -221,28 +233,61 @@ public class BusquedaProducto extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       
+    private void btnCambiarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarEstadoActionPerformed
+        this.cambiarEstado();
+    }//GEN-LAST:event_btnCambiarEstadoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.buscar();
+        System.out.println("1");
+    }//GEN-LAST:event_btnBuscarActionPerformed
+   
+    private void buscar(){
         switch (cbxTipos.getSelectedIndex()) {
             case 0:
                 pedidos = fnegocios.obtenerPedidosIDUsuario(Long.valueOf(jtxtSearch.getText()));
                 this.cargarTabla();
                 break;
             case 1:
-                pedidos=fnegocios.obtenerPedidosCliente(jtxtSearch.getText());
+                pedidos = fnegocios.obtenerPedidosCliente(jtxtSearch.getText());
                 this.cargarTabla();
                 break;
             case 2:
-                pedidos= fnegocios.obtenerPedidosUsuario(jtxtSearch.getText());
+                pedidos = fnegocios.obtenerPedidosUsuario(jtxtSearch.getText());
                 this.cargarTabla();
                 break;
             case 3:
-                pedidos= fnegocios.obtenerPedidosEstado(jtxtSearch.getText().toUpperCase());
+                pedidos = fnegocios.obtenerPedidosEstado(jtxtSearch.getText().toUpperCase());
                 this.cargarTabla();
             default:
                 break;
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }
+    private void cambiarEstado() {
+        int fila = this.tblPedidos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un Pedido.",
+                    "Precaución", JOptionPane.WARNING_MESSAGE);
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) this.tblPedidos.getModel();
+            Long idPedido = (Long) modelo.getValueAt(fila, 0);
+            //obtenerlo de memoria
+            Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
+            if (pedido != null) {
+                pedidoAux = pedido;
+                if (!pedidoAux.getEstado().equals(Estado.LISTO)) {
+                    EstadoPedido estado = new EstadoPedido(this, rootPaneCheckingEnabled, pedidoAux.getEstado(), this);
+                    estado.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(this, "El producto ya se encuentra listo :).",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     private void obtenerPedidos() {
         this.pedidos = fnegocios.obtenerPedidos();
@@ -292,7 +337,8 @@ public class BusquedaProducto extends javax.swing.JFrame {
             p.getId(),
             this.getTotalProducts(p),
             p.getTotal(),
-            p.getCliente().getNombre()
+            p.getCliente().getNombre(),
+            p.getEstado()
         };
     }
 
@@ -305,7 +351,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
         return total;
     }
 
-    public void cargarPedido() {
+    private void cargarPedido() {
         int fila = this.tblPedidos.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione un Pedido.",
@@ -328,12 +374,29 @@ public class BusquedaProducto extends javax.swing.JFrame {
         }
     }
 
+    public void cambiarEstado(Estado estado) {
+        this.pedidoAux.setEstado(estado);
+        this.actualizar();
+    }
+
+    public void actualizar() {
+        if (fnegocios.actualizarPedido(pedidoAux)) {
+            JOptionPane.showMessageDialog(rootPane, "Estado del pedido actualizado");
+            this.obtenerPedidos();
+            this.cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se puedo actualizar el estado del pedido.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCambiarEstado;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cbxTipos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

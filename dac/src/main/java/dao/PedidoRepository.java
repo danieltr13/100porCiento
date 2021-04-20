@@ -46,6 +46,7 @@ public class PedidoRepository extends BaseRepository<Pedido> {
         if (pedido != null) {
             pedido.setTotal(pedidoAc.getTotal());
             pedido.setEstado(pedidoAc.getEstado());
+            pedido.setDetallePedido(pedidoAc.getDetallePedido());
             entityManager.merge(pedido);
             entityManager.getTransaction().commit();
             entityManager.close();

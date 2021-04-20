@@ -244,9 +244,9 @@ public class DetalleProductoS extends javax.swing.JFrame {
 
     private String getDescription(Producto product) {
         String description = "";
-        for (DetalleIngrediente detalle : product.getDetalleIngredientes()) {
-            description = detalle.getIngrediente().getNombre() + " ";
-        }
+        for (DetalleIngrediente detalleIngrediente : product.getDetalleIngredientes()) {
+                description+= detalleIngrediente.getIngrediente().getNombre()+", ";
+            }
         return description;
     }
 

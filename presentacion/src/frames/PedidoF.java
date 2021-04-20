@@ -15,11 +15,15 @@ import dominio.Estado;
 import dominio.Pedido;
 import dominio.Producto;
 import dominio.Usuario;
+import impresion.BillPrintable;
+import impresion.PageSet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +48,8 @@ public class PedidoF extends javax.swing.JFrame {
 
     private INegocio fnegocios;
     private DetalleProductoS detalleProductoS;
+
+    private boolean tipoPedido;
     //
     private ArrayList<Producto> productsCategory;
     private ArrayList<DetallePedido> productsAdded;
@@ -61,6 +67,7 @@ public class PedidoF extends javax.swing.JFrame {
     private int panelX;
     private int panelY;
     private float subtotal;
+    private PrinterJob pj;
 
     /**
      * Creates new form Pedido
@@ -82,7 +89,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.setResizable(false);
         //Agregar bien el usuario
         this.usuario = fnegocios.obtenerUsuarioPorId(1l);
-        this.clienteLocal = fnegocios.obtenerClientePorId(2l);
+        this.clienteLocal = fnegocios.obtenerClientePorId(1l);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
@@ -90,6 +97,8 @@ public class PedidoF extends javax.swing.JFrame {
         this.fnegocios = new FNegocio();
         this.productsCategory = new ArrayList<>();
         this.productsAdded = new ArrayList<>();
+        this.tipoPedido = false;
+        this.pj= PrinterJob.getPrinterJob();
     }
 
     //Cambiar color y ancho
@@ -154,9 +163,9 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        jpnOrdenLocal = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        jpnOrdenDomicilio = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -183,11 +192,13 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
+        txtNameClient = new javax.swing.JTextField();
+        txtEntrega = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
+        txtLastClient = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
         btnAddOrden = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -238,16 +249,16 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user24.png"))); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 20, -1, -1));
 
-        jPanel6.setBackground(new java.awt.Color(230, 99, 57));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jpnOrdenLocal.setBackground(new java.awt.Color(230, 99, 57));
+        jpnOrdenLocal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel6MouseClicked(evt);
+                jpnOrdenLocalMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel6MouseEntered(evt);
+                jpnOrdenLocalMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanel6MouseExited(evt);
+                jpnOrdenLocalMouseExited(evt);
             }
         });
 
@@ -255,35 +266,35 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Orden local");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnOrdenLocalLayout = new javax.swing.GroupLayout(jpnOrdenLocal);
+        jpnOrdenLocal.setLayout(jpnOrdenLocalLayout);
+        jpnOrdenLocalLayout.setHorizontalGroup(
+            jpnOrdenLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnOrdenLocalLayout.createSequentialGroup()
                 .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(61, 61, 61))
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        jpnOrdenLocalLayout.setVerticalGroup(
+            jpnOrdenLocalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnOrdenLocalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 13, -1, -1));
+        jPanel2.add(jpnOrdenLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 13, -1, -1));
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        jpnOrdenDomicilio.setBackground(new java.awt.Color(255, 255, 255));
+        jpnOrdenDomicilio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel8MouseClicked(evt);
+                jpnOrdenDomicilioMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel8MouseEntered(evt);
+                jpnOrdenDomicilioMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanel8MouseExited(evt);
+                jpnOrdenDomicilioMouseExited(evt);
             }
         });
 
@@ -291,24 +302,24 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(122, 132, 131));
         jLabel6.setText("Orden a domicilio");
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpnOrdenDomicilioLayout = new javax.swing.GroupLayout(jpnOrdenDomicilio);
+        jpnOrdenDomicilio.setLayout(jpnOrdenDomicilioLayout);
+        jpnOrdenDomicilioLayout.setHorizontalGroup(
+            jpnOrdenDomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnOrdenDomicilioLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel6)
                 .addContainerGap(47, Short.MAX_VALUE))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+        jpnOrdenDomicilioLayout.setVerticalGroup(
+            jpnOrdenDomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnOrdenDomicilioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(696, 13, -1, -1));
+        jPanel2.add(jpnOrdenDomicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(696, 13, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Fernanda");
@@ -629,15 +640,8 @@ public class PedidoF extends javax.swing.JFrame {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user24px.png"))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel12.setText("Fernanda Miranda");
-        jLabel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre del Cliente", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 13), new java.awt.Color(102, 102, 102))); // NOI18N
-
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("Entregar en: ");
-
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel14.setText("..............");
 
         jLabel31.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel31.setText("Teléfono:");
@@ -645,39 +649,58 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel32.setText("...............");
 
+        txtNameClient.setEditable(false);
+
+        txtEntrega.setEditable(false);
+
+        txtPhone.setEditable(false);
+
+        txtLastClient.setEditable(false);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLastClient, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                    .addComponent(jLabel32)
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel31))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel31)
-                            .addComponent(jLabel32)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(txtEntrega)
+                            .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel31)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLastClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel32)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -838,76 +861,100 @@ public class PedidoF extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-        jPanel8.setBackground(new Color(230, 99, 57));
-        this.color2 = jPanel8.getBackground();
+    private void jpnOrdenDomicilioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenDomicilioMouseClicked
+        jpnOrdenDomicilio.setBackground(new Color(230, 99, 57));
+        this.color2 = jpnOrdenDomicilio.getBackground();
         this.color = Color.WHITE;
         this.jLabel6.setForeground(Color.WHITE);
-        this.jPanel6.setBackground(Color.WHITE);
+        this.jpnOrdenLocal.setBackground(Color.WHITE);
         this.jLabel5.setForeground(new Color(122, 132, 131));
-    }//GEN-LAST:event_jPanel8MouseClicked
+        this.activarCamposCliente();
+        this.tipoPedido = true;
+    }//GEN-LAST:event_jpnOrdenDomicilioMouseClicked
 
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        jPanel6.setBackground(new Color(230, 99, 57));
-        this.color = jPanel6.getBackground();
+    private void activarCamposCliente() {
+        this.txtEntrega.setEditable(true);
+        this.txtLastClient.setEditable(true);
+        this.txtNameClient.setEditable(true);
+        this.txtPhone.setEditable(true);
+    }
+
+    private void desactivarCamposCliente() {
+        this.txtEntrega.setEditable(false);
+        this.txtLastClient.setEditable(false);
+        this.txtNameClient.setEditable(false);
+        this.txtPhone.setEditable(false);
+    }
+
+    private void limpiarCamposCliente() {
+        this.txtEntrega.setText("");
+        this.txtLastClient.setText("");
+        this.txtNameClient.setText("");
+        this.txtPhone.setText("");
+    }
+    private void jpnOrdenLocalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenLocalMouseClicked
+        jpnOrdenLocal.setBackground(new Color(230, 99, 57));
+        this.color = jpnOrdenLocal.getBackground();
         this.color2 = Color.WHITE;
         this.jLabel5.setForeground(Color.WHITE);
-        this.jPanel8.setBackground(Color.WHITE);
+        this.jpnOrdenDomicilio.setBackground(Color.WHITE);
         this.jLabel6.setForeground(new Color(122, 132, 131));
-    }//GEN-LAST:event_jPanel6MouseClicked
+        this.desactivarCamposCliente();
+        this.tipoPedido = false;
+    }//GEN-LAST:event_jpnOrdenLocalMouseClicked
 
-    private void jPanel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseEntered
+    private void jpnOrdenDomicilioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenDomicilioMouseEntered
         if (this.color2.getRGB() == Color.white.getRGB()) {
-            this.jPanel8.setBackground(new Color(250, 190, 182));
+            this.jpnOrdenDomicilio.setBackground(new Color(250, 190, 182));
             this.jLabel6.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_jPanel8MouseEntered
+    }//GEN-LAST:event_jpnOrdenDomicilioMouseEntered
 
-    private void jPanel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseExited
+    private void jpnOrdenDomicilioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenDomicilioMouseExited
         Color naranja = new Color(230, 99, 57);
         if (this.color2.getRGB() == naranja.getRGB()) {
-            jPanel8.setBackground(new Color(230, 99, 57));
+            jpnOrdenDomicilio.setBackground(new Color(230, 99, 57));
             this.jLabel6.setForeground(Color.WHITE);
         }
 
         if (this.color2.getRGB() == Color.white.getRGB()) {
-            jPanel8.setBackground(Color.WHITE);
+            jpnOrdenDomicilio.setBackground(Color.WHITE);
             this.jLabel6.setForeground(new Color(122, 132, 131));
         }
-    }//GEN-LAST:event_jPanel8MouseExited
+    }//GEN-LAST:event_jpnOrdenDomicilioMouseExited
 
-    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
+    private void jpnOrdenLocalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenLocalMouseEntered
         if (this.color.getRGB() == Color.white.getRGB()) {
-            this.jPanel6.setBackground(new Color(250, 190, 182));
+            this.jpnOrdenLocal.setBackground(new Color(250, 190, 182));
             this.jLabel5.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_jPanel6MouseEntered
+    }//GEN-LAST:event_jpnOrdenLocalMouseEntered
 
-    private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
+    private void jpnOrdenLocalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnOrdenLocalMouseExited
         Color naranja = new Color(230, 99, 57);
         if (this.color.getRGB() == naranja.getRGB()) {
-            jPanel6.setBackground(new Color(230, 99, 57));
+            jpnOrdenLocal.setBackground(new Color(230, 99, 57));
             this.jLabel5.setForeground(Color.WHITE);
         }
 
         if (this.color.getRGB() == Color.white.getRGB()) {
-            jPanel6.setBackground(Color.WHITE);
+            jpnOrdenLocal.setBackground(Color.WHITE);
             this.jLabel5.setForeground(new Color(122, 132, 131));
         }
-    }//GEN-LAST:event_jPanel6MouseExited
+    }//GEN-LAST:event_jpnOrdenLocalMouseExited
 
     private void lblSandwichesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSandwichesMouseClicked
-        getProductsCategory("sandwiches");
+        this.getProductsCategory("sandwiches");
         this.lblCategoria.setText("Sandwiches");
     }//GEN-LAST:event_lblSandwichesMouseClicked
 
     private void lblLicuadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLicuadosMouseClicked
-        getProductsCategory("licuados");
+        this.getProductsCategory("licuados");
         this.lblCategoria.setText("Licuados");
     }//GEN-LAST:event_lblLicuadosMouseClicked
 
     private void lblFrappesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFrappesMouseClicked
-        getProductsCategory("frappes");
+        this.getProductsCategory("frappes");
         this.lblCategoria.setText("Frappes");
     }//GEN-LAST:event_lblFrappesMouseClicked
 
@@ -940,7 +987,7 @@ public class PedidoF extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel10MouseClicked
 
     private void LblPostresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblPostresMouseClicked
-         getProductsCategory("postres");
+        getProductsCategory("postres");
         this.lblCategoria.setText("Postres");
     }//GEN-LAST:event_LblPostresMouseClicked
 
@@ -949,6 +996,10 @@ public class PedidoF extends javax.swing.JFrame {
         this.lblCategoria.setText("Cafés");
     }//GEN-LAST:event_lblCafésMouseClicked
 
+    private boolean createClient() {
+        return fnegocios.guardarCliente(new Cliente(txtNameClient.getText(), txtLastClient.getText(), txtPhone.getText(), txtEntrega.getText()));
+    }
+
     private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.productsAdded = new ArrayList<>();
@@ -956,26 +1007,63 @@ public class PedidoF extends javax.swing.JFrame {
         menu.setVisible(true);
     }
 
+    private Cliente obtainClient() {
+        List<Cliente> clientes = fnegocios.obtenerClientes();
+        return clientes.get(clientes.size() - 1);
+    }
+
     private void addPedido() {
-        Pedido pedido = new Pedido(subtotal, Estado.ESPERANDO, clienteLocal, usuario);
+        Cliente cliente = null;
+        if (tipoPedido == true) {
+            if (createClient()) {
+                cliente = obtainClient();
+            } else {
+                //Mandar alerta
+            }
+        } else {
+            cliente = clienteLocal;
+        }
+        Pedido pedido = new Pedido(subtotal, Estado.ESPERANDO, cliente, usuario);
         setPedidoToDetails(pedido);
         pedido.setDetallePedido(productsAdded);
         if (fnegocios.guardarPedido(pedido)) {
             JOptionPane.showMessageDialog(rootPane, "Pedido guardado");
             limpiarPaneles();
             this.pedidoActualizado = null;
+            this.limpiarCamposCliente();
+            this.imprimirPedido(pedido);
         }
-
     }
 
     private void actualizarPedido() {
         setPedidoToDetails(pedidoActualizado);
+        System.out.println(productsAdded.size());
         pedidoActualizado.setDetallePedido(productsAdded);
+        pedidoActualizado.setTotal(subtotal);
+        if (tipoPedido == true) {
+            Cliente cliente = pedidoActualizado.getCliente();
+            cliente.setNombre(txtNameClient.getText());
+            cliente.setApellido(txtLastClient.getText());
+            cliente.setTelefono(txtPhone.getText());
+            cliente.setDomicilio(txtEntrega.getText());
+            pedidoActualizado.setCliente(cliente);
+        }
         if (fnegocios.actualizarPedido(pedidoActualizado)) {
             JOptionPane.showMessageDialog(rootPane, "Pedido Actualizado");
             limpiarPaneles();
+            this.limpiarCamposCliente();
+            this.imprimirPedido(pedidoActualizado);
         }
 
+    }
+
+    private void imprimirPedido(Pedido pedido) {
+        pj.setPrintable(new BillPrintable(pedido), new PageSet().getPageFormat(pj));
+        try {
+            pj.print();
+        } catch (PrinterException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void limpiarPaneles() {
@@ -994,11 +1082,6 @@ public class PedidoF extends javax.swing.JFrame {
         for (DetallePedido detallePedido : productsAdded) {
             detallePedido.setPedido(pedido);
         }
-    }
-
-    //Metodo para que dependiendo el tipo de cliente obtenga los datos
-    private void addTypeOfClientToDetails(Cliente cliente) {
-
     }
 
     private void getProductsCategory(String category) {
@@ -1026,7 +1109,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.jpProductsAd.removeAll();
         this.jpProductsAd.updateUI();
         for (DetallePedido detalle : productsAdded) {
-            addProductsAdded(productoPedidoAltura, detalle.getProducto().getNombre(), detalle.getTotal().toString(), detalle.getCantidad().toString());
+            addProductsAdded(productoPedidoAltura, detalle);
             addPanelsY();
             this.subtotal += detalle.getTotal();
         }
@@ -1112,8 +1195,8 @@ public class PedidoF extends javax.swing.JFrame {
 
     private String getDescription(Producto product) {
         String description = "";
-        for (DetalleIngrediente detalle : product.getDetalleIngredientes()) {
-            description = detalle.getIngrediente().getNombre() + " ";
+        for (DetalleIngrediente detalleIngrediente : product.getDetalleIngredientes()) {
+            description += detalleIngrediente.getIngrediente().getNombre() + ", ";
         }
         return description;
     }
@@ -1205,7 +1288,7 @@ public class PedidoF extends javax.swing.JFrame {
     }
 
     //separar funcion 
-    private void addProductsAdded(int y, String producto, String total, String cantidad) {
+    private void addProductsAdded(int y, DetallePedido detallePedido) {
 
         JPanel jpAdded = new javax.swing.JPanel();
         JLabel productNameAdded = new javax.swing.JLabel();
@@ -1218,16 +1301,16 @@ public class PedidoF extends javax.swing.JFrame {
         jpAdded.setBackground(new java.awt.Color(255, 255, 255));
 
         productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        productNameAdded.setText(producto);
+        productNameAdded.setText(detallePedido.getProducto().getNombre());
 
         txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtSubTotal.setText("$" + total);
+        txtSubTotal.setText("$" + detallePedido.getTotal());
 
         jpCant.setBackground(new java.awt.Color(255, 255, 255));
         jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtNumItems.setText(cantidad);
+        txtNumItems.setText(detallePedido.getCantidad().toString());
 
         txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
         txtRest.setText("-");
@@ -1240,16 +1323,16 @@ public class PedidoF extends javax.swing.JFrame {
         jpAdded.setBackground(new java.awt.Color(255, 255, 255));
 
         productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        productNameAdded.setText(producto);
+        productNameAdded.setText(detallePedido.getProducto().getNombre());
 
         txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtSubTotal.setText("$" + total);
+        txtSubTotal.setText("$" + detallePedido.getTotal());
 
         jpCant.setBackground(new java.awt.Color(255, 255, 255));
         jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtNumItems.setText(cantidad);
+        txtNumItems.setText(detallePedido.getCantidad() + "");
 
         txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
         txtRest.setText("-");
@@ -1316,7 +1399,7 @@ public class PedidoF extends javax.swing.JFrame {
         jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jpProductsAd.add(jpAdded);
         setVisible(true);
-        this.addMethods(txtRest, txtMas);
+        this.addMethods(txtRest, txtMas, txtNumItems, txtSubTotal, detallePedido);
     }
 
     private JLabel productAddedName(JLabel productNameAdded, String producto) {
@@ -1371,22 +1454,37 @@ public class PedidoF extends javax.swing.JFrame {
         cargarProductosAgregados();
     }
 
-    private void addMethods(JLabel rest, JLabel mas) {
+    private void addMethods(JLabel rest, JLabel mas, JLabel jCantidad, JLabel subTotal, DetallePedido detalle) {
 
         rest.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                // you can open a new frame here as
-                // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button menos!" + ": " + productoPedidoAltura);
+                if (detalle.getCantidad() - 1 == 0) {
+                    productsAdded.remove(detalle);
+                    cargarProductosAgregados();
+                } else {
+                    detalle.setCantidad(detalle.getCantidad() - 1);
+                    detalle.setTotal(detalle.getTotal() - detalle.getProducto().getPrecio());
+                    //atributo
+                    subtotal -= detalle.getProducto().getPrecio();
+                    //subtotal+= detalle.getProducto().getPrecio();
+                    lblSubTotal.setText(subtotal + "");
+                    jCantidad.setText(detalle.getCantidad() + "");
+                    //actualizar en memoria
+                    subTotal.setText("$" + detalle.getTotal() + "");
+                }
                 productoPedidoAltura++;
             }
         });
 
         mas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                // you can open a new frame here as
-                // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button mas!" + ": " + productoPedidoAltura);
+                subtotal -= detalle.getCantidad() * detalle.getProducto().getPrecio();
+                detalle.setCantidad(detalle.getCantidad() + 1);
+                detalle.setTotal(detalle.getCantidad() * detalle.getProducto().getPrecio());
+                subtotal += detalle.getTotal();
+                lblSubTotal.setText(subtotal + "");
+                jCantidad.setText(detalle.getCantidad() + "");
+                subTotal.setText("$" + detalle.getTotal() + "");
                 productoPedidoAltura++;
             }
         });
@@ -1407,9 +1505,7 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1438,13 +1534,13 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPaneAdded;
     private javax.swing.JPanel jpProductsAd;
     private javax.swing.JPanel jpanelProducts;
+    private javax.swing.JPanel jpnOrdenDomicilio;
+    private javax.swing.JPanel jpnOrdenLocal;
     private javax.swing.JScrollPane jscrollProducts;
     private javax.swing.JLabel lblCafés;
     private javax.swing.JLabel lblCategoria;
@@ -1454,6 +1550,10 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JLabel lblSandwiches;
     private javax.swing.JLabel lblSnacks;
     private javax.swing.JLabel lblSubTotal;
+    private javax.swing.JTextField txtEntrega;
+    private javax.swing.JTextField txtLastClient;
+    private javax.swing.JTextField txtNameClient;
+    private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 
 }
