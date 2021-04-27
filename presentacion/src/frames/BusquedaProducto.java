@@ -88,7 +88,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
 
         cbxTipos.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         cbxTipos.setForeground(new java.awt.Color(230, 99, 57));
-        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "Cliente", "Usuario", "Estado" }));
+        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "Cliente", "Estado" }));
         cbxTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTiposActionPerformed(evt);
@@ -266,10 +266,6 @@ public class BusquedaProducto extends javax.swing.JFrame {
                 this.cargarTabla();
                 break;
             case 2:
-                pedidos = fnegocios.obtenerPedidosUsuario(jtxtSearch.getText());
-                this.cargarTabla();
-                break;
-            case 3:
                 pedidos = fnegocios.obtenerPedidosEstado(jtxtSearch.getText().toUpperCase());
                 this.cargarTabla();
             default:
