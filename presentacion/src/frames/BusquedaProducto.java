@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BusquedaProducto extends javax.swing.JFrame {
 
-    private INegocio fnegocios;
+    private final INegocio fnegocios;
     private List<Pedido> pedidos;
     private Pedido pedidoAux;
 
@@ -33,8 +33,8 @@ public class BusquedaProducto extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         fnegocios = new FNegocio();
-        pedidos = fnegocios.obtenerPedidos();
-        this.cargarTabla();
+         pedidos = fnegocios.obtenerPedidos();
+         this.cargarTabla();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
@@ -77,6 +77,11 @@ public class BusquedaProducto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 23)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/dona32px.png"))); // NOI18N
         jLabel3.setText("100%");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 60));
 
         jtxtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
@@ -91,7 +96,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
         });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(230, 99, 57))); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10), new java.awt.Color(230, 99, 57))); // NOI18N
 
         tblPedidos.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -241,7 +246,15 @@ public class BusquedaProducto extends javax.swing.JFrame {
         this.buscar();
         System.out.println("1");
     }//GEN-LAST:event_btnBuscarActionPerformed
-   
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        this.regresarAlMenu();
+    }//GEN-LAST:event_jLabel3MouseClicked
+     private void regresarAlMenu() {
+        MenuPedidos menu = new MenuPedidos();
+        this.dispose();
+        menu.setVisible(true);
+    }
     private void buscar(){
         switch (cbxTipos.getSelectedIndex()) {
             case 0:
@@ -323,7 +336,7 @@ public class BusquedaProducto extends javax.swing.JFrame {
         if (pedidos != null) {
             DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
             modelo.setRowCount(0);
-            for (Pedido c : pedidos) {
+             for (Pedido c : pedidos) {
                 modelo.addRow(this.toArray(c));
             }
         } else {

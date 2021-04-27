@@ -78,7 +78,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
 
         jLabel1.setText("subTotal:");
 
-        jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 75, 1));
 
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N

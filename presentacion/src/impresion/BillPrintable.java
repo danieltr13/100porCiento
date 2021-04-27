@@ -83,16 +83,15 @@ public class BillPrintable implements Printable {
                     if (nota.equalsIgnoreCase("")) {
                         nota="Ninguna";
                     }
-                    for (int j = 0; j < pedido.getDetallePedido().get(i).getCantidad(); j++) {
                         g2d.drawString(" " + 
-                                String.format("%10s", pedido.getDetallePedido().get(i).getProducto().getNombre())
-                                + String.format("%20s", pedido.getDetallePedido().get(i).getProducto().getPrecio()) 
+                                String.format("%-30s", pedido.getDetallePedido().get(i).getProducto().getNombre()+" "+
+                                        pedido.getDetallePedido().get(i).getCantidad())
+                                + String.format("%s", pedido.getDetallePedido().get(i).getProducto().getPrecio()) 
                                 + "  ", 10, y);
                         y += yShift;
                         g2d.drawString("Nota: \n"+nota, 10, y);
-                         
                         y += yShift;
-                    }
+                    
                 }
                 g2d.drawString("-------------------------------------", 10, y);
                 y += yShift;

@@ -1018,7 +1018,7 @@ public class PedidoF extends javax.swing.JFrame {
             if (createClient()) {
                 cliente = obtainClient();
             } else {
-                //Mandar alerta
+              
             }
         } else {
             cliente = clienteLocal;

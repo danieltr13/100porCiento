@@ -146,6 +146,6 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "id=" + id + ", total=" + total + ", estado=" + estado + ", cliente=" + cliente.getNombre() + ", usuario=" + usuario.getId() + ", detallePedido=" + detallePedido + '}';
+        return "Pedido{" + "id=" + id + ", total=" + total + ", estado=" + estado  + ", detallePedido=" + detallePedido + '}';
     }
 }

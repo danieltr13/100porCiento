@@ -27,7 +27,7 @@ public class PageSet {
         double headerHeight = 2.0;
         double footerHeight = 2.0;
         double width = convert_CM_To_PPI(8);      //printer know only point per inch.default value is 72ppi
-        double height = convert_CM_To_PPI(headerHeight + middleHeight + footerHeight);
+        double height = convert_CM_To_PPI(headerHeight * middleHeight * footerHeight);
         paper.setSize(width, height);
         paper.setImageableArea(
                 0,
@@ -38,7 +38,6 @@ public class PageSet {
 
         pf.setOrientation(PageFormat.PORTRAIT);           //select orientation portrait or landscape but for this time portrait
         pf.setPaper(paper);
-
         return pf;
     }
 

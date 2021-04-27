@@ -22,5 +22,9 @@ public class test {
         PedidoRepository fachada = new PedidoRepository();
         List<Pedido> pedidos = fachada.buscarPorUsuaridID(1L);
         pedidos.forEach(p -> System.out.println(p));
+        System.out.println(fachada.buscarTodas());
+        INegocio fas= new FNegocio();
+        System.out.println("");
+        System.out.println(fas.obtenerPedidos());
     }
 }
