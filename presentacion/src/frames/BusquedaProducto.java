@@ -244,7 +244,6 @@ public class BusquedaProducto extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
-        System.out.println("1");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -258,12 +257,23 @@ public class BusquedaProducto extends javax.swing.JFrame {
     private void buscar(){
         switch (cbxTipos.getSelectedIndex()) {
             case 0:
-                pedidos = fnegocios.obtenerPedidosIDUsuario(Long.valueOf(jtxtSearch.getText()));
-                this.cargarTabla();
+                Pedido p= fnegocios.obtenerPedidoPorId(Long.valueOf(jtxtSearch.getText()));
+                pedidos.clear();
+                if (p!=null) {
+                    pedidos.add(p);
+                }
+                if (pedidos.isEmpty()) {
+                    JOptionPane.showMessageDialog(this,"No existen pedidos con ese id", "Error id", JOptionPane.ERROR_MESSAGE);
+                } else{this.cargarTabla();}
                 break;
             case 1:
                 pedidos = fnegocios.obtenerPedidosCliente(jtxtSearch.getText());
-                this.cargarTabla();
+                if (pedidos.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "No se encontro al cliente"
+                            + "o el cliente no contiene pedidos", "No se encontró cliente", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    this.cargarTabla();
+                }
                 break;
             case 2:
                 pedidos = fnegocios.obtenerPedidosEstado(jtxtSearch.getText().toUpperCase());
@@ -370,12 +380,19 @@ public class BusquedaProducto extends javax.swing.JFrame {
             Long idPedido = (Long) modelo.getValueAt(fila, 0);
             //obtenerlo de memoria
             Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
+            
             if (pedido != null) {
-                PedidoF p = new PedidoF();
-                p.setProductsAdded(new ArrayList<>(pedido.getDetallePedido()));
-                p.setPedidoActualizado(pedido);
-                p.setVisible(true);
-                this.dispose();
+                if (pedido.getEstado()!=Estado.ESPERANDO) {
+                    JOptionPane.showMessageDialog(this, "Solo se pueden editar pedidos con el estado de esperando"
+                            + "", "Error editar pedido", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    PedidoF p = new PedidoF();
+                    p.setProductsAdded(new ArrayList<>(pedido.getDetallePedido()));
+                    p.setPedidoActualizado(pedido);
+                    p.setVisible(true);
+                    this.dispose();
+            }
+               
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
                         "Error", JOptionPane.ERROR_MESSAGE);

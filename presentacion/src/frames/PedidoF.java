@@ -98,7 +98,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.productsCategory = new ArrayList<>();
         this.productsAdded = new ArrayList<>();
         this.tipoPedido = false;
-        this.pj= PrinterJob.getPrinterJob();
+        this.pj = PrinterJob.getPrinterJob();
     }
 
     //Cambiar color y ancho
@@ -959,11 +959,16 @@ public class PedidoF extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFrappesMouseClicked
 
     private void btnAddOrdenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddOrdenMouseClicked
-        if (pedidoActualizado == null) {
-            this.addPedido();
+        if (!this.productsAdded.isEmpty()) {
+            if (pedidoActualizado == null) {
+                this.addPedido();
+            } else {
+                this.actualizarPedido();
+            }
         } else {
-            this.actualizarPedido();
+            JOptionPane.showMessageDialog(this, "No hay productos añadidos al pedido", "Pedido vacío", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnAddOrdenMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -1018,7 +1023,7 @@ public class PedidoF extends javax.swing.JFrame {
             if (createClient()) {
                 cliente = obtainClient();
             } else {
-              
+
             }
         } else {
             cliente = clienteLocal;
