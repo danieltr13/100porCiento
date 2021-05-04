@@ -29,8 +29,6 @@ public class DetalleProductoS extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +77,11 @@ public class DetalleProductoS extends javax.swing.JFrame {
         jLabel1.setText("subTotal:");
 
         jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 75, 1));
+        jsCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jsCantidadStateChanged(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
@@ -214,9 +217,17 @@ public class DetalleProductoS extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void jsCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsCantidadStateChanged
+        this.setSubtotal();
+    }//GEN-LAST:event_jsCantidadStateChanged
+    private void setSubtotal() {
+        int value = (int) this.jsCantidad.getValue();
+        this.txtSubTotal.setText(String.valueOf(product.getPrecio() * value));
+    }
+
     private boolean validarDatos() {
-        if ((Integer)jsCantidad.getValue()<=0) {
-            JOptionPane.showMessageDialog(null, "Ingrese la cantidad deseada","Valor incorrecto",JOptionPane.ERROR_MESSAGE);
+        if ((Integer) jsCantidad.getValue() <= 0) {
+            JOptionPane.showMessageDialog(null, "Ingrese la cantidad deseada", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -235,8 +246,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         this.pedido.addToList(detallePedido);
         this.dispose();
     }
-     
-    
+
     public void mostrarDetalles() {
         this.lblProducto.setText(this.product.getNombre());
         this.txaDetalle.append(getDescription(product));
@@ -245,8 +255,8 @@ public class DetalleProductoS extends javax.swing.JFrame {
     private String getDescription(Producto product) {
         String description = "";
         for (DetalleIngrediente detalleIngrediente : product.getDetalleIngredientes()) {
-                description+= detalleIngrediente.getIngrediente().getNombre()+", ";
-            }
+            description += detalleIngrediente.getIngrediente().getNombre() + ", ";
+        }
         return description;
     }
 
