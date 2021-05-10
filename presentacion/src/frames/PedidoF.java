@@ -78,7 +78,8 @@ public class PedidoF extends javax.swing.JFrame {
         this.productosPedido = 0;
 
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);        
+        this.setTitle("FrmRegistrarPedido");
         panelX = 0;
         panelY = 5;
         this.subtotal = 0;

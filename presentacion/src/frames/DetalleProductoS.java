@@ -27,6 +27,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
     public DetalleProductoS() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("FrmDetalleProducto");
     }
 
     /**
@@ -54,6 +55,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -64,17 +66,19 @@ public class DetalleProductoS extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57), 3));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
         jPanel1.setForeground(new java.awt.Color(230, 99, 57));
         jPanel1.setToolTipText("");
 
         txaNotas.setColumns(20);
+        txaNotas.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         txaNotas.setRows(5);
+        txaNotas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
         jScrollPane2.setViewportView(txaNotas);
 
-        jLabel2.setText("cantidad:");
+        jLabel2.setText("Cantidad:");
 
-        jLabel1.setText("subTotal:");
+        jLabel1.setText("SubTotal:");
 
         jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 75, 1));
         jsCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -99,7 +103,9 @@ public class DetalleProductoS extends javax.swing.JFrame {
 
         txaDetalle.setEditable(false);
         txaDetalle.setColumns(20);
+        txaDetalle.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         txaDetalle.setRows(5);
+        txaDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
         jScrollPane1.setViewportView(txaDetalle);
 
         lblNotas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -123,13 +129,17 @@ public class DetalleProductoS extends javax.swing.JFrame {
         });
 
         jPanel2.setBackground(new java.awt.Color(245, 235, 220));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 221, 221), 2));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 23)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/dona32px.png"))); // NOI18N
         jLabel3.setText("100%");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 60));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 60));
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(230, 99, 57));
+        jLabel4.setText("Detalle de Producto");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,7 +150,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblProducto)
-                        .addGap(0, 427, Short.MAX_VALUE))
+                        .addGap(0, 431, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -161,14 +171,14 @@ public class DetalleProductoS extends javax.swing.JFrame {
                                 .addComponent(btnAceptar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancelar)))
-                        .addGap(20, 20, 20))))
+                        .addGap(22, 22, 22))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblProducto)
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,6 +293,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
