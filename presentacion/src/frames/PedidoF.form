@@ -845,7 +845,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -972,7 +972,7 @@
                                       <Component id="lblSubTotal" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblTotal" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
@@ -1001,7 +1001,7 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="25" max="32767" attributes="0"/>
@@ -1099,7 +1099,7 @@
                     <Property name="text" type="java.lang.String" value="$ 00.00"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel24">
+                <Component class="javax.swing.JLabel" name="lblTotal">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="13" style="1"/>
@@ -1120,7 +1120,7 @@
                 <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                 <Property name="verticalScrollBarPolicy" type="int" value="22"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
                 <Property name="horizontalScrollBar" type="javax.swing.JScrollBar" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="null"/>

@@ -209,7 +209,7 @@ public class PedidoF extends javax.swing.JFrame {
         lblSubTotal = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         jScrollPaneAdded = new javax.swing.JScrollPane();
         jpProductsAd = new javax.swing.JPanel();
 
@@ -680,7 +680,7 @@ public class PedidoF extends javax.swing.JFrame {
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEntrega)
                             .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -745,9 +745,9 @@ public class PedidoF extends javax.swing.JFrame {
         jLabel23.setForeground(new java.awt.Color(51, 51, 51));
         jLabel23.setText("$ 00.00");
 
-        jLabel24.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel24.setText("$ 00.00");
+        lblTotal.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(51, 51, 51));
+        lblTotal.setText("$ 00.00");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -770,7 +770,7 @@ public class PedidoF extends javax.swing.JFrame {
                             .addComponent(lblSubTotal)
                             .addComponent(jLabel22)
                             .addComponent(jLabel23)
-                            .addComponent(jLabel24))
+                            .addComponent(lblTotal))
                         .addGap(20, 20, 20))))
         );
         jPanel16Layout.setVerticalGroup(
@@ -793,7 +793,7 @@ public class PedidoF extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel24)))
+                        .addComponent(lblTotal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(btnAddOrden)
                 .addContainerGap())
@@ -1121,6 +1121,7 @@ public class PedidoF extends javax.swing.JFrame {
         }
         this.lblSubTotal.setText(subtotal + "");
         System.out.println(productsAdded.size());
+        this.lblTotal.setText(subtotal + "");
     }
 
     //Cambiar el nombre porque solo es para cambiar los valores de x &&y
@@ -1519,7 +1520,6 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -1556,6 +1556,7 @@ public class PedidoF extends javax.swing.JFrame {
     private javax.swing.JLabel lblSandwiches;
     private javax.swing.JLabel lblSnacks;
     private javax.swing.JLabel lblSubTotal;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTextField txtEntrega;
     private javax.swing.JTextField txtLastClient;
     private javax.swing.JTextField txtNameClient;
