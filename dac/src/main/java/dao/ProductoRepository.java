@@ -44,7 +44,8 @@ public class ProductoRepository extends BaseRepository<Producto> {
         if (producto != null) {
             producto.setNombre(productoActualizado.getNombre());
             producto.setCantidad(productoActualizado.getCantidad());
-            producto.setPrecio(producto.getPrecio());
+            producto.setPrecio(productoActualizado.getPrecio());
+            producto.setDetalleIngredientes(productoActualizado.getDetalleIngredientes());
             entityManager.merge(producto);
             entityManager.getTransaction().commit();
             entityManager.close();
@@ -86,7 +87,7 @@ public class ProductoRepository extends BaseRepository<Producto> {
         EntityManager em = this.createEntityManager();
         em.getTransaction().begin();
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(Ingrediente.class));
+        cq.select(cq.from(Producto.class));
         Query query = em.createQuery(cq);
         ArrayList<Producto> productos = new ArrayList<>(query.getResultList());
         em.getTransaction().commit();

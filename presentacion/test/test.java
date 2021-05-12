@@ -253,12 +253,14 @@ public class test {
     productos.guardar(nieveChocolate);
 
 
-        List<Producto>pr=productos.buscarCategoria("LICUADOS");
-        for (Producto producto : pr) {
-            System.out.println(producto);
-            for (DetalleIngrediente detalleIngrediente : producto.getDetalleIngredientes()) {
-                System.out.println(detalleIngrediente.getIngrediente().getNombre());
-            }
-        }
+//        List<Producto>pr=productos.buscarCategoria("LICUADOS");
+//        for (Producto producto : pr) {
+//            System.out.println(producto);
+//            for (DetalleIngrediente detalleIngrediente : producto.getDetalleIngredientes()) {
+//                System.out.println(detalleIngrediente.getIngrediente().getNombre());
+//            }
+//        }
+
+
     }
 }

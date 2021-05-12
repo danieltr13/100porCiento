@@ -154,6 +154,15 @@ public class Producto implements Serializable {
         this.categoria = estado;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -176,7 +185,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "idproducto=" + idproducto + ", nombre=" + nombre + ", precio=" + precio + ", cantidad=" + cantidad + ", detalleIngredientes=" + detalleIngredientes + ", detallePedidos=" + detallePedidos + '}';
+        return "Producto{" + "idproducto=" + idproducto + ", nombre=" + nombre + ", precio=" + precio + ", cantidad=" + cantidad +'}';
     }
     
 }
