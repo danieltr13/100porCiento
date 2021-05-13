@@ -25,17 +25,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RegistrarProducto extends javax.swing.JFrame {
 
+    private ConsultarProductos busqueda;
     private INegocio fNegocio;
     private List<Categoria> categorias;
     private Producto productoActualizado;
     private List<Ingrediente> ingredientes;
-    private List<Ingrediente> ingredientesAgregados;
+    private List<DetalleIngrediente> ingredientesAgregados;
     private DefaultListModel modeloIngredientes;
-    private final INegocio fnegocios;   
+    private final INegocio fnegocios;
+
     /**
      * Creates new form RegistrarPedido
      */
-
     public RegistrarProducto() {
         initComponents();
         this.setTitle("FrmRegistrarPedido");
@@ -99,7 +100,6 @@ public class RegistrarProducto extends javax.swing.JFrame {
         tblIngredientes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListIngredientes = new javax.swing.JList<>();
-        btnEliminar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,7 +126,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(19, 19, 19))
         );
@@ -201,15 +201,6 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jListIngredientes);
 
-        btnEliminar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(230, 99, 57));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         btnAgregar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(230, 99, 57));
         btnAgregar.setText("Agregar");
@@ -223,9 +214,6 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -257,20 +245,19 @@ public class RegistrarProducto extends javax.swing.JFrame {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnEliminar)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 133, Short.MAX_VALUE))
+                                .addGap(0, 128, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHGuardar)))
                 .addContainerGap(47, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,9 +284,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnAgregar))
+                .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHGuardar)
@@ -333,17 +318,12 @@ public class RegistrarProducto extends javax.swing.JFrame {
         this.cargarIngrediente();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-    
-
-    private void agregarIngredientesActualizado(){
+    private void agregarIngredientesActualizado() {
         for (DetalleIngrediente dIngrediente : productoActualizado.getDetalleIngredientes()) {
-            this.agregarIngrediente(dIngrediente.getIngrediente());
+            this.agregarIngrediente(dIngrediente);
         }
     }
-    
+
     private void cargarIngrediente() {
         int fila = this.tblIngredientes.getSelectedRow();
         if (fila == -1) {
@@ -357,18 +337,18 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 /*
                     CAMBIAR TOSTRING DE INGREDIENTE PARA QUE SALGA BIEN EN LA LISTA
                     O CAMBIAR MODELO PARA QUE SEA UN STRING, CREAR UN METODO PARA BUSCAR Y LUEGO HACER CUALQUIER OTRA OPCIÓN.
-                */
-                agregarIngrediente(ingrediente);
+                 */
+                agregarIngrediente(crearDetalleIngredientes(ingrediente));
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el producto.",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-    
-    private void agregarIngrediente(Ingrediente ingrediente) {
+
+    private void agregarIngrediente(DetalleIngrediente ingrediente) {
         this.ingredientesAgregados.add(ingrediente);
-        this.modeloIngredientes.addElement(ingrediente);
+        this.modeloIngredientes.addElement(ingrediente.getIngrediente());
     }
 
     private void obtenerIngredientes() {
@@ -407,7 +387,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private void addProducto() {
         String nombre = this.txtName.getText();
-        Categoria categoria = (Categoria)this.cboxCategoria.getSelectedItem();
+        Categoria categoria = (Categoria) this.cboxCategoria.getSelectedItem();
         float precio = Float.parseFloat(this.txtPrecio.getText());
         String tipo = this.cboxTipo.getSelectedItem().toString();
         int cantidad = Integer.valueOf(this.txtCantidad.getText());
@@ -417,40 +397,52 @@ public class RegistrarProducto extends javax.swing.JFrame {
         } else {
             producto = new ProductoListo(nombre, precio, cantidad, categoria);
         }
-        producto.setDetalleIngredientes(crearDetalleIngredientes(producto));
+        addProductoToDetalle(producto);
+        producto.setDetalleIngredientes(ingredientesAgregados);
         if (fNegocio.guardarProducto(producto)) {
             JOptionPane.showMessageDialog(rootPane, "Producto guardado");
-            this.ingredientesAgregados=new ArrayList<>();
+            this.ingredientesAgregados = new ArrayList<>();
+            this.regresarBusquedaProducto();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Error al guardar");
         }
     }
-    
-    private List<DetalleIngrediente> crearDetalleIngredientes(Producto producto){
-        List<DetalleIngrediente>detalles=new ArrayList<>();
-        for (Ingrediente ingrediente : ingredientesAgregados) {
-            DetalleIngrediente dt= new DetalleIngrediente();
-            dt.setProducto(producto);
-            dt.setIngrediente(ingrediente);
-            detalles.add(dt);
-        }
-        return detalles;
+
+    private void regresarBusquedaProducto() {
+        this.busqueda = new ConsultarProductos();
+        busqueda.setVisible(true);
+        this.dispose();
     }
-    
+
+    private void addProductoToDetalle(Producto producto) {
+        for (DetalleIngrediente ia : ingredientesAgregados) {
+            ia.setProducto(producto);
+        }
+    }
+
+    private DetalleIngrediente crearDetalleIngredientes(Ingrediente ingrediente) {
+        DetalleIngrediente dt = new DetalleIngrediente();
+        dt.setIngrediente(ingrediente);
+        return dt;
+    }
+
     private void updateProducto() {
         String nombre = this.txtName.getText();
-        Categoria categoria =(Categoria)this.cboxCategoria.getSelectedItem();
+        Categoria categoria = (Categoria) this.cboxCategoria.getSelectedItem();
         float precio = Float.parseFloat(this.txtPrecio.getText());
         int cantidad = Integer.valueOf(this.txtCantidad.getText());
         this.productoActualizado.setNombre(nombre);
         this.productoActualizado.setCategoria(categoria);
         this.productoActualizado.setPrecio(precio);
         this.productoActualizado.setCantidad(cantidad);
-        this.productoActualizado.setDetalleIngredientes(crearDetalleIngredientes(this.productoActualizado));
-        System.out.println(productoActualizado.getDetalleIngredientes());
+        addProductoToDetalle(productoActualizado);
+        this.productoActualizado.setDetalleIngredientes(ingredientesAgregados);
+        System.out.println(ingredientesAgregados);
         if (fNegocio.actualizarProducto(productoActualizado)) {
             this.productoActualizado = null;
             JOptionPane.showMessageDialog(rootPane, "Producto actualizado");
+            this.regresarBusquedaProducto();
+
         } else {
             JOptionPane.showMessageDialog(rootPane, "Error al actualizar producto");
         }
@@ -494,7 +486,6 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnHGuardar;
     private javax.swing.JComboBox<Categoria> cboxCategoria;
     private javax.swing.JComboBox<String> cboxTipo;

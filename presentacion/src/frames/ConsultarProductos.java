@@ -48,7 +48,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         cbxTipos = new javax.swing.JComboBox<>();
-        jtxtSearch = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,18 +63,23 @@ public class ConsultarProductos extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
 
         cbxTipos.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Nombre" }));
+        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Id", "Categoria", " " }));
 
-        jtxtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        jtxtSearch.addActionListener(new java.awt.event.ActionListener() {
+        txtBusqueda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        txtBusqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtSearchActionPerformed(evt);
+                txtBusquedaActionPerformed(evt);
             }
         });
 
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(230, 99, 57));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(230, 99, 57));
@@ -143,7 +148,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(10, 10, 10)
-                            .addComponent(jtxtSearch)
+                            .addComponent(txtBusqueda)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(80, Short.MAX_VALUE))
@@ -155,7 +160,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,9 +187,9 @@ public class ConsultarProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtSearchActionPerformed
+    private void txtBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtSearchActionPerformed
+    }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
              //this.productos.co
@@ -195,6 +200,27 @@ public class ConsultarProductos extends javax.swing.JFrame {
         this.cargarPedido();
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.buscarProductos();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void buscarProductos(){
+        this.productos.clear();
+        if(cbxTipos.getSelectedIndex()==0){
+            this.obtenerProductos();
+        }else if(cbxTipos.getSelectedIndex()==1){
+            Producto p= fnegocios.obtenerProductoPorId(Long.parseLong(this.txtBusqueda.getText()));
+            if(p!=null){
+                this.productos.add(p);
+            }else{
+                JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            }
+        }else{
+            this.productos=fnegocios.obtenerProductosCategoria(this.txtBusqueda.getText());
+        }
+        this.cargarTabla();
+    }
+    
     private void cargarPedido() {
         int fila = this.tblProductos.getSelectedRow();
         if (fila == -1) {
@@ -241,8 +267,8 @@ public class ConsultarProductos extends javax.swing.JFrame {
             p.getCantidad(),
             p.getCategoria()
         };
-    }
-
+    } 
+            
     /**
      * @param args the command line arguments
      */
@@ -287,7 +313,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jtxtSearch;
     private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
