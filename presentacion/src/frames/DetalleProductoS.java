@@ -70,16 +70,21 @@ public class DetalleProductoS extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(230, 99, 57));
         jPanel1.setToolTipText("");
 
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+
         txaNotas.setColumns(20);
-        txaNotas.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txaNotas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txaNotas.setRows(5);
         txaNotas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
         jScrollPane2.setViewportView(txaNotas);
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setText("Cantidad:");
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("SubTotal:");
 
+        jsCantidad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jsCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 75, 1));
         jsCantidad.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -88,7 +93,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         });
 
         btnCancelar.setBackground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(230, 99, 57));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +108,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
 
         txaDetalle.setEditable(false);
         txaDetalle.setColumns(20);
-        txaDetalle.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txaDetalle.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txaDetalle.setRows(5);
         txaDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
         jScrollPane1.setViewportView(txaDetalle);
@@ -112,6 +117,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
         lblNotas.setForeground(new java.awt.Color(51, 51, 51));
         lblNotas.setText("Notas");
 
+        txtSubTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtSubTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSubTotalActionPerformed(evt);
@@ -134,23 +140,28 @@ public class DetalleProductoS extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 0, 23)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/dona32px.png"))); // NOI18N
         jLabel3.setText("100%");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, 60));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, 60));
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(230, 99, 57));
         jLabel4.setText("Detalle de Producto");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 60));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblProducto)
-                        .addGap(0, 431, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -160,33 +171,33 @@ public class DetalleProductoS extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(7, 7, 7)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(8, 8, 8)
                                 .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                                 .addComponent(btnAceptar)
-                                .addGap(18, 18, 18)
+                                .addGap(10, 10, 10)
                                 .addComponent(btnCancelar)))
-                        .addGap(22, 22, 22))))
+                        .addGap(40, 40, 40))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(lblProducto)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(lblNotas)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
+                .addComponent(lblNotas)
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +205,7 @@ public class DetalleProductoS extends javax.swing.JFrame {
                     .addComponent(jsCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addGap(20, 20, 20))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -205,7 +216,9 @@ public class DetalleProductoS extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -230,6 +243,17 @@ public class DetalleProductoS extends javax.swing.JFrame {
     private void jsCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jsCantidadStateChanged
         this.setSubtotal();
     }//GEN-LAST:event_jsCantidadStateChanged
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+       this.regresarAlMenu();
+    }//GEN-LAST:event_jLabel3MouseClicked
+    
+     private void regresarAlMenu() {
+        MenuPedidos menu = new MenuPedidos();
+        this.dispose();
+        menu.setVisible(true);
+    }    
+    
     private void setSubtotal() {
         int value = (int) this.jsCantidad.getValue();
         this.txtSubTotal.setText(String.valueOf(product.getPrecio() * value));

@@ -32,7 +32,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
     public BusquedaPedido() {
         initComponents();
         this.setLocationRelativeTo(null);        
-        this.setTitle("FrmConsultarPedido");
+        this.setTitle("Frm: Consulta rPedido");
         fnegocios = new FNegocio();
          pedidos = fnegocios.obtenerPedidos();
          this.cargarTabla();
@@ -83,18 +83,18 @@ public class BusquedaPedido extends javax.swing.JFrame {
                 jLabel3MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, -1, 60));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, -1, 60));
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(230, 99, 57));
         jLabel6.setText("Consultar Pedidos");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 60));
 
         jtxtSearch.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jtxtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
-        cbxTipos.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "Cliente", "Estado" }));
+        cbxTipos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Cliente", "Estado" }));
         cbxTipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTiposActionPerformed(evt);
@@ -105,7 +105,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
 
         tblPedidos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
-        tblPedidos.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        tblPedidos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -131,7 +131,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
             tblPedidos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        btnBuscar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(230, 99, 57));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +140,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnEditar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(230, 99, 57));
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +149,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(230, 99, 57));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +158,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
             }
         });
 
-        btnCambiarEstado.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnCambiarEstado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCambiarEstado.setForeground(new java.awt.Color(230, 99, 57));
         btnCambiarEstado.setText("Cambiar estado");
         btnCambiarEstado.addActionListener(new java.awt.event.ActionListener() {
@@ -171,46 +171,44 @@ public class BusquedaPedido extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnCambiarEstado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(229, 229, 229)
                         .addComponent(btnEditar)
-                        .addGap(18, 18, 18)
+                        .addGap(15, 15, 15)
                         .addComponent(btnEliminar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(15, 15, 15)
+                            .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(15, 15, 15)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 37, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxTipos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar)
                     .addComponent(btnCambiarEstado))
-                .addGap(25, 25, 25))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
