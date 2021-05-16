@@ -6,7 +6,9 @@
 package dominio;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -35,6 +38,10 @@ public class Pedido implements Serializable {
     
     @Column(name="total")
     private Float total;
+    
+    @Column(name="fecha")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha;
     
     @Column(name = "estado", length = 15)
     @Enumerated(EnumType.STRING)
@@ -61,7 +68,8 @@ public class Pedido implements Serializable {
         this.estado = estado;
         this.cliente = cliente;
         this.usuario = usuario;
-        this.detallePedido = detallePedido;
+        this.detallePedido = detallePedido;      
+        fecha = new Date();
     }
 
     public Pedido(Float total, Estado estado, Cliente cliente, Usuario usuario) {
@@ -99,6 +107,16 @@ public class Pedido implements Serializable {
     public Cliente getCliente() {
         return cliente;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
+    
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;

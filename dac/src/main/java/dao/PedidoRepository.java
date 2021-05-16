@@ -8,6 +8,7 @@ package dao;
 import dominio.Estado;
 import dominio.Pedido;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -125,6 +126,13 @@ public class PedidoRepository extends BaseRepository<Pedido> {
     public ArrayList<Pedido> buscarPorUsuario(String usuario) {
         EntityManager entityManager = this.createEntityManager();
         List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e INNER JOIN e.usuario t where t.nombre Like '%" + usuario + "%'").getResultList();
+        entityManager.close();
+        return new ArrayList<>(p);
+    }
+    
+    public ArrayList<Pedido> buscarPorPeriodo(Date inicio, Date fin) {
+        EntityManager entityManager = this.createEntityManager();
+        List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e WHERE e.fecha >= " + inicio + "AND e.fecha < "+ fin ).getResultList();
         entityManager.close();
         return new ArrayList<>(p);
     }

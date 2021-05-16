@@ -11,6 +11,7 @@ import dominio.Pedido;
 import dominio.Producto;
 import dominio.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -52,6 +53,8 @@ public interface INegocio {
     public ArrayList<Pedido> obtenerPedidosCliente(String cliente);
     public ArrayList<Pedido> obtenerPedidosEstado(String estado);
     public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario);
+    public ArrayList<Pedido> obtenerPorPeriodo(Date inicio, Date fin);
     //check de cast
     public ArrayList<Producto> obtenerProductosCategoria(String categoria);
 }
+

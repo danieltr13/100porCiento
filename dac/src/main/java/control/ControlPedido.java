@@ -7,7 +7,9 @@ package control;
 
 import dao.PedidoRepository;
 import dominio.Pedido;
+import static dominio.Pedido_.estado;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +53,10 @@ public class ControlPedido {
     }
     public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario){
         return pedidoRepository.buscarPorUsuaridID(idUsuario);
+    }
+    
+    public ArrayList<Pedido> obtenerPedidosPorPeriodo(Date inicio, Date fin){
+        return pedidoRepository.buscarPorPeriodo(inicio, fin);
     }
     
     //Verificar si el casteo funciona

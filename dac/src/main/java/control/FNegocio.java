@@ -11,6 +11,7 @@ import dominio.Pedido;
 import dominio.Producto;
 import dominio.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -180,6 +181,11 @@ public class FNegocio implements INegocio {
     @Override
     public ArrayList<Pedido> obtenerPedidosIDUsuario(Long idUsuario) {
         return controlPedido.obtenerPedidosIDUsuario(idUsuario);
+    }
+    
+    @Override
+    public ArrayList<Pedido> obtenerPorPeriodo(Date inicio, Date fin) {
+        return controlPedido.obtenerPedidosPorPeriodo(inicio, fin);
     }
 
 }
