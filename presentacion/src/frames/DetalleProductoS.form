@@ -164,6 +164,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txaNotasKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -247,6 +250,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txaDetalleKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

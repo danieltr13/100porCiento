@@ -31,11 +31,11 @@ public class BusquedaPedido extends javax.swing.JFrame {
      */
     public BusquedaPedido() {
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);
         this.setTitle("Frm: Consulta rPedido");
         fnegocios = new FNegocio();
-         pedidos = fnegocios.obtenerPedidos();
-         this.cargarTabla();
+        pedidos = fnegocios.obtenerPedidos();
+        this.cargarTabla();
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
@@ -92,6 +92,11 @@ public class BusquedaPedido extends javax.swing.JFrame {
 
         jtxtSearch.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jtxtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        jtxtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtSearchKeyTyped(evt);
+            }
+        });
 
         cbxTipos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbxTipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Cliente", "Estado" }));
@@ -256,29 +261,43 @@ public class BusquedaPedido extends javax.swing.JFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         this.regresarAlMenu();
     }//GEN-LAST:event_jLabel3MouseClicked
-     private void regresarAlMenu() {
+
+    private void jtxtSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtSearchKeyTyped
+        if (jtxtSearch.getText().length() == 15) {
+            evt.consume();
+        }
+        if (!Character.isDigit(evt.getKeyChar())) {
+            if (!Character.isLetter(evt.getKeyChar())) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_jtxtSearchKeyTyped
+    private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.dispose();
         menu.setVisible(true);
     }
-    private void buscar(){
+
+    private void buscar() {
         switch (cbxTipos.getSelectedIndex()) {
             case 0:
-                Pedido p= fnegocios.obtenerPedidoPorId(Long.valueOf(jtxtSearch.getText()));
+                Pedido p = fnegocios.obtenerPedidoPorId(Long.valueOf(jtxtSearch.getText()));
                 pedidos.clear();
-                if (p!=null) {
+                if (p != null) {
                     pedidos.add(p);
                 }
                 if (pedidos.isEmpty()) {
-                    JOptionPane.showMessageDialog(this,"No existen pedidos con ese id", "Error id", JOptionPane.ERROR_MESSAGE);
-                } else{this.cargarTabla();}
+                    JOptionPane.showMessageDialog(this, "No existen pedidos con ese id", "Error id", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    this.cargarTabla();
+                }
                 break;
             case 1:
                 pedidos = fnegocios.obtenerPedidosCliente(jtxtSearch.getText());
                 if (pedidos.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "No se encontro al cliente"
                             + "o el cliente no contiene pedidos", "No se encontró cliente", JOptionPane.ERROR_MESSAGE);
-                }else{
+                } else {
                     this.cargarTabla();
                 }
                 break;
@@ -289,6 +308,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
                 break;
         }
     }
+
     private void cambiarEstado() {
         int fila = this.tblPedidos.getSelectedRow();
         if (fila == -1) {
@@ -304,9 +324,9 @@ public class BusquedaPedido extends javax.swing.JFrame {
                 if (!pedidoAux.getEstado().equals(Estado.LISTO)) {
                     EstadoPedido estado = new EstadoPedido(this, rootPaneCheckingEnabled, pedidoAux.getEstado(), this);
                     estado.setVisible(true);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "El producto ya se encuentra listo :).",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
@@ -349,7 +369,7 @@ public class BusquedaPedido extends javax.swing.JFrame {
         if (pedidos != null) {
             DefaultTableModel modelo = (DefaultTableModel) tblPedidos.getModel();
             modelo.setRowCount(0);
-             for (Pedido c : pedidos) {
+            for (Pedido c : pedidos) {
                 modelo.addRow(this.toArray(c));
             }
         } else {
@@ -387,19 +407,19 @@ public class BusquedaPedido extends javax.swing.JFrame {
             Long idPedido = (Long) modelo.getValueAt(fila, 0);
             //obtenerlo de memoria
             Pedido pedido = fnegocios.obtenerPedidoPorId(idPedido);
-            
+
             if (pedido != null) {
-                if (pedido.getEstado()!=Estado.ESPERANDO) {
+                if (pedido.getEstado() != Estado.ESPERANDO) {
                     JOptionPane.showMessageDialog(this, "Solo se pueden editar pedidos con el estado de esperando"
                             + "", "Error editar pedido", JOptionPane.ERROR_MESSAGE);
-                }else{
+                } else {
                     PedidoF p = new PedidoF();
                     p.setProductsAdded(new ArrayList<>(pedido.getDetallePedido()));
                     p.setPedidoActualizado(pedido);
                     p.setVisible(true);
                     this.dispose();
-            }
-               
+                }
+
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el pedido.",
                         "Error", JOptionPane.ERROR_MESSAGE);

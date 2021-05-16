@@ -71,6 +71,11 @@ public class ConsultarProductos extends javax.swing.JFrame {
                 txtBusquedaActionPerformed(evt);
             }
         });
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(230, 99, 57));
@@ -200,6 +205,17 @@ public class ConsultarProductos extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscarProductos();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+         if (txtBusqueda.getText().length() == 15) {
+            evt.consume();
+        }
+        if (!Character.isDigit(evt.getKeyChar())) {
+            if (!Character.isLetter(evt.getKeyChar())) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtBusquedaKeyTyped
 
      private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();

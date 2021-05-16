@@ -14,9 +14,11 @@ import dominio.Ingrediente;
 import dominio.Producto;
 import dominio.ProductoListo;
 import dominio.ProductoPreparado;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
@@ -84,7 +86,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         });
         jsingredientes.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
     }
-    
+
     private void modifyScrollsAdded2() {
 
         jsproductos.getVerticalScrollBar().setUI(new WindowsScrollBarUI() {
@@ -95,10 +97,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         });
         jsproductos.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
     }
-    
-      
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,14 +182,34 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jLabel3.setText("Precio");
 
         txtName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNameKeyTyped(evt);
+            }
+        });
 
         cboxCategoria.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(230, 99, 57));
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnHGuardar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnHGuardar.setForeground(new java.awt.Color(230, 99, 57));
@@ -211,6 +230,11 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jLabel4.setText("Cantidad");
 
         txtCantidad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
 
         jsingredientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
 
@@ -237,6 +261,16 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jsingredientes.setViewportView(tblIngredientes);
 
         jListIngredientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+        jListIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListIngredientesMouseClicked(evt);
+            }
+        });
+        jListIngredientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jListIngredientesKeyTyped(evt);
+            }
+        });
         jsproductos.setViewportView(jListIngredientes);
 
         btnAgregar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -367,13 +401,65 @@ public class RegistrarProducto extends javax.swing.JFrame {
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         this.regresarAlMenu();
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+
+    }//GEN-LAST:event_txtNameActionPerformed
+
+    private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        if (txtName.getText().length() == 21) {
+            evt.consume();
+        }
+        if (!Character.isLetter(evt.getKeyChar())) {
+            if (!Character.isSpaceChar(evt.getKeyChar())) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txtNameKeyTyped
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+            evt.consume();
+        }
+        if (evt.getKeyChar() == '.' && txtPrecio.getText().contains(".")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        if (txtCantidad.getText().length() == 11) {
+            evt.consume();
+        }
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void jListIngredientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListIngredientesKeyTyped
+
+    }//GEN-LAST:event_jListIngredientesKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.limpiar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jListIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListIngredientesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListIngredientesMouseClicked
     
-     private void regresarAlMenu() {
+    public void limpiar(){
+        this.txtName.setText("");
+        this.tblIngredientes.clearSelection();
+        this.txtCantidad.setText("");
+        this.txtPrecio.setText("");
+    }
+    
+    private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.dispose();
         menu.setVisible(true);
-    }    
-    
+    }
+
     private void agregarIngredientesActualizado() {
         for (DetalleIngrediente dIngrediente : productoActualizado.getDetalleIngredientes()) {
             this.agregarIngrediente(dIngrediente);

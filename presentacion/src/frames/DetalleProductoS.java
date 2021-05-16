@@ -76,6 +76,11 @@ public class DetalleProductoS extends javax.swing.JFrame {
         txaNotas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txaNotas.setRows(5);
         txaNotas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+        txaNotas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txaNotasKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(txaNotas);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -111,6 +116,11 @@ public class DetalleProductoS extends javax.swing.JFrame {
         txaDetalle.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txaDetalle.setRows(5);
         txaDetalle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+        txaDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txaDetalleKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txaDetalle);
 
         lblNotas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -247,6 +257,28 @@ public class DetalleProductoS extends javax.swing.JFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
        this.regresarAlMenu();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void txaDetalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txaDetalleKeyTyped
+        if (txaDetalle.getText().length() == 200) {
+            evt.consume();
+        }
+        if (!Character.isLetter(evt.getKeyChar())) {
+            if (!Character.isSpaceChar(evt.getKeyChar())) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txaDetalleKeyTyped
+
+    private void txaNotasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txaNotasKeyTyped
+        if (txaNotas.getText().length() == 100) {
+            evt.consume();
+        }
+        if (!Character.isLetter(evt.getKeyChar())) {
+            if (!Character.isSpaceChar(evt.getKeyChar())) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_txaNotasKeyTyped
     
      private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
