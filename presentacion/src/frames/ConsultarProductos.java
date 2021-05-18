@@ -215,6 +215,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
                 evt.consume();
             }
         }
+                    
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
      private void regresarAlMenu() {
