@@ -13,9 +13,9 @@ import java.awt.print.PrinterJob;
  *
  * @author Alfon
  */
-public class PageSet {
+public class PaginaRecibo {
 
-    public PageSet() {
+    public PaginaRecibo() {
     }
     
     public PageFormat getPageFormat(PrinterJob pj) {

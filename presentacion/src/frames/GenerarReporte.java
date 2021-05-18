@@ -5,19 +5,42 @@
  */
 package frames;
 
+import control.FNegocio;
+import control.INegocio;
+import dominio.DetallePedido;
+import dominio.Pedido;
+import dominio.Producto;
+import impresion.ImprimirReporte;
+import impresion.PaginaReporte;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Fernanda Miranda
  */
 public class GenerarReporte extends javax.swing.JFrame {
-
-    /**
-     * Creates new form GenerarReporte
-     */
+    private PrinterJob pj;
+    private final INegocio facade;
+    private ImprimirReporte imprimirReporte;
+    
     public GenerarReporte() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("FrmGenerarReporte");
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.facade = new FNegocio();
+        this.desactivarDates();
+        this.pj = PrinterJob.getPrinterJob();
     }
 
     /**
@@ -33,21 +56,27 @@ public class GenerarReporte extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        dateInicio = new com.github.lgooddatepicker.components.DatePicker();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
+        dateFin = new com.github.lgooddatepicker.components.DatePicker();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         cbxTipo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbProductos = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
@@ -83,18 +112,28 @@ public class GenerarReporte extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(230, 99, 57));
         jButton2.setText("Generar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         cbxTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIARIO", "PERIODO" }));
+        cbxTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxTipoItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Tipo de Reporte");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
-        jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
+        jtbProductos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jtbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -102,10 +141,10 @@ public class GenerarReporte extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Categoría ", "Precio actual", "Total"
+                "ID", "Nombre", "Categoría ", "Cantidad", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtbProductos);
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel7.setText("Vista previa");
@@ -116,6 +155,15 @@ public class GenerarReporte extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jLabel9.setText("$ 00.00");
 
+        btnImprimir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnImprimir.setForeground(new java.awt.Color(230, 99, 57));
+        btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -123,33 +171,33 @@ public class GenerarReporte extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel7)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel5))
-                                    .addGap(38, 38, 38)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4)))))
-                        .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jButton2))
-                        .addGap(48, 48, 48))))
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5))
+                            .addGap(38, 38, 38)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnImprimir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1)
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jButton2))
+                            .addGap(8, 8, 8))))
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,11 +212,11 @@ public class GenerarReporte extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(15, 15, 15)
-                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel7)
                 .addGap(20, 20, 20)
@@ -180,7 +228,8 @@ public class GenerarReporte extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(btnImprimir))
                 .addGap(30, 30, 30))
         );
 
@@ -202,17 +251,132 @@ public class GenerarReporte extends javax.swing.JFrame {
         this.regresarAlMenu();
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        MenuPedidos menu = new MenuPedidos();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        cargarTabla(getProductosRango());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbxTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTipoItemStateChanged
+        if (this.cbxTipo.getSelectedIndex() == 0) {
+            this.desactivarDates();
+        } else {
+            this.dateFin.setEnabled(true);
+            this.dateInicio.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbxTipoItemStateChanged
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+            imprimirReporte(this.getListDetallePedidos(getProductosRango()));
+        
+    }//GEN-LAST:event_btnImprimirActionPerformed
+    
+     private void imprimirReporte(List<DetallePedido> detalleP) {
+        pj.setPrintable(new ImprimirReporte(detalleP), new PaginaReporte().getPageFormat(pj));
+        try {
+            pj.print();
+        } catch (PrinterException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void desactivarDates() {
+        this.dateFin.setEnabled(false);
+        this.dateInicio.setEnabled(false);
+    }
+    
+    private HashMap<Producto, Integer> getProductosRango() {
+        List<Pedido> pedidos = this.getPedidosDate();
+        HashMap<Producto, Integer> productos = new HashMap<>();
+        for (int i = 0; i < pedidos.size(); i++) {
+            List<DetallePedido> detallePedido = pedidos.get(i).getDetallePedido();
+            for (int j = 0; j < detallePedido.size(); j++) {
+                if (!productos.containsKey(detallePedido.get(j).getProducto())) {
+                    productos.put(detallePedido.get(j).getProducto(),
+                            detallePedido.get(j).getCantidad());
+                } else {
+                    productos.put(detallePedido.get(j).getProducto(),
+                            productos.get(detallePedido.get(j).getProducto())
+                            + detallePedido.get(j).getCantidad());
+                }
+            }
+        }
+        return productos;
+    }
+    
+    private List<Pedido> getPedidosDate() {
+        Date fInicio;
+        Date fFin;
+        if (this.cbxTipo.getSelectedIndex() == 1) {
+            LocalDate fechaInicio = dateInicio.getDate();
+            LocalDate fechaFin = dateFin.getDate();
+            fInicio = this.LocalDateToDate(fechaInicio);
+            fFin = this.LocalDateToDate(fechaFin);
+        } else {
+            fInicio = new Date();
+            fFin = new Date();
+        }
+        List<Pedido> pedidos = this.facade.obtenerPorPeriodo(fInicio, fFin);
+        return pedidos;
+    }
+    
+    private Date LocalDateToDate(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+    
     private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.dispose();
         menu.setVisible(true);
-    }    
-     
- 
+    }
+    
+    private List<DetallePedido> getListDetallePedidos(HashMap<Producto, Integer> producto) {
+        List<DetallePedido> detallesPedidos = new ArrayList<>();
+        producto.entrySet().forEach(entry -> {
+            detallesPedidos.add(new DetallePedido(0,
+                    entry.getValue(),
+                    entry.getKey().getPrecio() * entry.getValue(),
+                    null,
+                    entry.getKey()));
+        });
+        return detallesPedidos;
+    }
+    
+    private void cargarTabla(HashMap<Producto, Integer> producto) {
+        List<DetallePedido> detallesPedidos = this.getListDetallePedidos(producto);
+        
+        if (!detallesPedidos.isEmpty()) {
+            DefaultTableModel modelo = (DefaultTableModel) this.jtbProductos.getModel();
+            modelo.setRowCount(0);
+            for (DetallePedido c : detallesPedidos) {
+                modelo.addRow(this.toArray(c));
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Sin resultados.",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    private Object[] toArray(DetallePedido p) {
+        return new Object[]{
+            p.getProducto().getId(),
+            p.getProducto().getNombre(),
+            p.getProducto().getCategoria(),
+            p.getCantidad(),
+            p.getTotal()
+        };
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JComboBox<String> cbxTipo;
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
+    private com.github.lgooddatepicker.components.DatePicker dateFin;
+    private com.github.lgooddatepicker.components.DatePicker dateInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
@@ -226,6 +390,6 @@ public class GenerarReporte extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtbProductos;
     // End of variables declaration//GEN-END:variables
 }

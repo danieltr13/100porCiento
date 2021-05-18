@@ -69,7 +69,7 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
         this.usuario = usuario;
         this.detallePedido = detallePedido;      
-        fecha = new Date();
+        this.fecha = new Date();
     }
 
     public Pedido(Float total, Estado estado, Cliente cliente, Usuario usuario) {
@@ -78,6 +78,7 @@ public class Pedido implements Serializable {
         this.estado = estado;
         this.cliente = cliente;
         this.usuario = usuario;
+        this.fecha= new Date();
     }
 
     public Long getId() {

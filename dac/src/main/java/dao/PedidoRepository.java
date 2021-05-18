@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -129,12 +130,19 @@ public class PedidoRepository extends BaseRepository<Pedido> {
         entityManager.close();
         return new ArrayList<>(p);
     }
-    
+
     public ArrayList<Pedido> buscarPorPeriodo(Date inicio, Date fin) {
         EntityManager entityManager = this.createEntityManager();
-        List<Pedido> p = entityManager.createQuery("SELECT DISTINCT e FROM Pedido e WHERE e.fecha >= " + inicio + "AND e.fecha < "+ fin ).getResultList();
+        entityManager.getTransaction().begin();
+        List<Pedido> pedidos;
+        String jpqlQuery = "SELECT p FROM Pedido p WHERE p.fecha BETWEEN :inicio AND :fin";
+        TypedQuery<Pedido> query = entityManager.createQuery(jpqlQuery, Pedido.class);
+        query.setParameter("inicio", inicio, TemporalType.DATE);
+        query.setParameter("fin", fin, TemporalType.DATE);
+        pedidos = query.getResultList();
+        entityManager.getTransaction().commit();
         entityManager.close();
-        return new ArrayList<>(p);
+        return new ArrayList<>(pedidos);
     }
 
     //Por si después o ocupo, por si after ok

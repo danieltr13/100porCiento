@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import javax.swing.table.DefaultTableModel;
@@ -56,6 +57,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         this.setCategorias();
         this.obtenerIngredientes();
         this.cargarTabla();
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     private void setCategorias() {
@@ -132,6 +134,11 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
@@ -446,14 +453,20 @@ public class RegistrarProducto extends javax.swing.JFrame {
     private void jListIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListIngredientesMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jListIngredientesMouseClicked
-    
-    public void limpiar(){
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        MenuPedidos menu = new MenuPedidos();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    public void limpiar() {
         this.txtName.setText("");
         this.tblIngredientes.clearSelection();
         this.txtCantidad.setText("");
         this.txtPrecio.setText("");
     }
-    
+
     private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.dispose();

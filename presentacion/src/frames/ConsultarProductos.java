@@ -12,6 +12,7 @@ import dominio.Pedido;
 import dominio.Producto;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,6 +36,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
         fnegocios = new FNegocio();
         this.obtenerProductos();
         this.cargarTabla();
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     /**
@@ -58,6 +60,11 @@ public class ConsultarProductos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 99, 57)));
@@ -195,7 +202,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBusquedaActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-          this.regresarAlMenu();           
+        this.regresarAlMenu();
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -207,7 +214,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
-         if (txtBusqueda.getText().length() == 15) {
+        if (txtBusqueda.getText().length() == 15) {
             evt.consume();
         }
         if (!Character.isDigit(evt.getKeyChar())) {
@@ -215,32 +222,38 @@ public class ConsultarProductos extends javax.swing.JFrame {
                 evt.consume();
             }
         }
-                    
+
     }//GEN-LAST:event_txtBusquedaKeyTyped
 
-     private void regresarAlMenu() {
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        MenuPedidos menu = new MenuPedidos();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void regresarAlMenu() {
         MenuPedidos menu = new MenuPedidos();
         this.dispose();
         menu.setVisible(true);
     }
-    
-    private void buscarProductos(){
+
+    private void buscarProductos() {
         this.productos.clear();
-        if(cbxTipos.getSelectedIndex()==0){
+        if (cbxTipos.getSelectedIndex() == 0) {
             this.obtenerProductos();
-        }else if(cbxTipos.getSelectedIndex()==1){
-            Producto p= fnegocios.obtenerProductoPorId(Long.parseLong(this.txtBusqueda.getText()));
-            if(p!=null){
+        } else if (cbxTipos.getSelectedIndex() == 1) {
+            Producto p = fnegocios.obtenerProductoPorId(Long.parseLong(this.txtBusqueda.getText()));
+            if (p != null) {
                 this.productos.add(p);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Producto no encontrado");
             }
-        }else{
-            this.productos=fnegocios.obtenerProductosCategoria(this.txtBusqueda.getText());
+        } else {
+            this.productos = fnegocios.obtenerProductosCategoria(this.txtBusqueda.getText());
         }
         this.cargarTabla();
     }
-    
+
     private void cargarPedido() {
         int fila = this.tblProductos.getSelectedRow();
         if (fila == -1) {
@@ -251,7 +264,7 @@ public class ConsultarProductos extends javax.swing.JFrame {
             Long idPedido = (Long) modelo.getValueAt(fila, 0);
             Producto producto = fnegocios.obtenerProductoPorId(idPedido);
             if (producto != null) {
-                rProducto= new RegistrarProducto();
+                rProducto = new RegistrarProducto();
                 rProducto.cargarProducto(producto);
                 rProducto.setVisible(true);
                 this.dispose();
@@ -287,9 +300,8 @@ public class ConsultarProductos extends javax.swing.JFrame {
             p.getCantidad(),
             p.getCategoria()
         };
-    } 
-            
-   
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

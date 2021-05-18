@@ -4,15 +4,17 @@ import dominio.Cliente;
 import dominio.DetallePedido;
 import dominio.Estado;
 import dominio.Usuario;
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2021-05-12T01:51:17")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2021-05-17T20:23:42")
 @StaticMetamodel(Pedido.class)
 public class Pedido_ { 
 
+    public static volatile SingularAttribute<Pedido, Date> fecha;
     public static volatile SingularAttribute<Pedido, Cliente> cliente;
     public static volatile SingularAttribute<Pedido, Float> total;
     public static volatile SingularAttribute<Pedido, Estado> estado;

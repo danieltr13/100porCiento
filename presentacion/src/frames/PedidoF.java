@@ -15,8 +15,8 @@ import dominio.Estado;
 import dominio.Pedido;
 import dominio.Producto;
 import dominio.Usuario;
-import impresion.BillPrintable;
-import impresion.PageSet;
+import impresion.ImprimirRecibo;
+import impresion.PaginaRecibo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -78,7 +78,7 @@ public class PedidoF extends javax.swing.JFrame {
         this.productosPedido = 0;
 
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);
         this.setTitle("FrmRegistrarPedido");
         panelX = 0;
         panelY = 5;
@@ -1008,8 +1008,10 @@ public class PedidoF extends javax.swing.JFrame {
         if (!this.productsAdded.isEmpty()) {
             if (pedidoActualizado == null) {
                 this.addPedido();
+                this.productsAdded.clear();
             } else {
                 this.actualizarPedido();
+                this.productsAdded.clear();
             }
         } else {
             JOptionPane.showMessageDialog(this, "No hay productos añadidos al pedido", "Pedido vacío", JOptionPane.ERROR_MESSAGE);
@@ -1080,7 +1082,7 @@ public class PedidoF extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEntregaKeyTyped
 
     private void txtPhoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyTyped
-         if (txtPhone.getText().length() == 10) {
+        if (txtPhone.getText().length() == 10) {
             evt.consume();
         }
         if (!Character.isDigit(evt.getKeyChar())) {
@@ -1089,7 +1091,7 @@ public class PedidoF extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPhoneKeyTyped
 
     private void txtExtraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExtraKeyTyped
-      if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
+        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
             evt.consume();
         }
         if (evt.getKeyChar() == '.' && txtExtra.getText().contains(".")) {
@@ -1163,7 +1165,7 @@ public class PedidoF extends javax.swing.JFrame {
     }
 
     private void imprimirPedido(Pedido pedido) {
-        pj.setPrintable(new BillPrintable(pedido), new PageSet().getPageFormat(pj));
+        pj.setPrintable(new ImprimirRecibo(pedido), new PaginaRecibo().getPageFormat(pj));
         try {
             pj.print();
         } catch (PrinterException ex) {

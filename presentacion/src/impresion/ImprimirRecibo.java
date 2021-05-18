@@ -20,11 +20,11 @@ import java.awt.print.PrinterException;
  *
  * @author Alfon
  */
-public class BillPrintable implements Printable {
+public class ImprimirRecibo implements Printable {
 
     private Pedido pedido;
 
-    public BillPrintable(Pedido pedido) {
+    public ImprimirRecibo(Pedido pedido) {
         this.pedido = pedido;
     }
 
