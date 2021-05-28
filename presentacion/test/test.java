@@ -34,23 +34,45 @@ public class test {
         UsuarioRepository usuarios= new UsuarioRepository();
         ClienteRepository clientes = new ClienteRepository();
         
-        Usuario usuario = new Usuario("LOCAL", "LOCAL", "LOCAL", "LOCAL", "LOCAL");
+        Usuario usuario = new Usuario("Perez", "12345", "Fernando", "Fer01", "6441950245");
+        Usuario usuario2 = new Usuario("Lopez", "12345", "Mario", "Mario05", "6441839482");
         usuarios.guardar(usuario);
+        usuarios.guardar(usuario2);
         
         Cliente cliente = new Cliente("JC", "MARTINEZ", "121344899", "MORELIA");
         
         clientes.guardar(cliente);
         
-        
-        Ingrediente lechuga = new Ingrediente("Lechuga", Float.valueOf(0));
-        Ingrediente tomate = new Ingrediente("Tomate", Float.valueOf(5));
-        Ingrediente jamon = new Ingrediente("Jamon", Float.valueOf(7));
-        Ingrediente queso = new Ingrediente("Queso", Float.valueOf(7));
-        Ingrediente pan = new Ingrediente("Pan", Float.valueOf(5));
-        Ingrediente milanesa = new Ingrediente("Milanesa", Float.valueOf(15));
-        
-        Ingrediente leche = new Ingrediente("Leche", Float.valueOf(0));
+        //Cafe
         Ingrediente platano = new Ingrediente("Platano", Float.valueOf(5));
+        Ingrediente azucar = new Ingrediente("Azucar", Float.valueOf(0));
+        Ingrediente canela = new Ingrediente("Canela", Float.valueOf(0));
+        Ingrediente chocomilk = new Ingrediente("Chocomilk", Float.valueOf(0));
+        Ingrediente fresa = new Ingrediente("Fresa", Float.valueOf(0));
+        Ingrediente arandono = new Ingrediente("Arandono", Float.valueOf(0));
+        Ingrediente frutosRojos = new Ingrediente("Frutos Rojos", Float.valueOf(0));
+        
+        
+        //Sandwiches
+        Ingrediente pan = new Ingrediente("Pan", Float.valueOf(5));
+        Ingrediente mayonesa = new Ingrediente("Mayonesa", Float.valueOf(0));
+        Ingrediente aderezoChipotle = new Ingrediente("Aderezo de Chipotle", Float.valueOf(0));
+        Ingrediente queso = new Ingrediente("Queso", Float.valueOf(7));
+        Ingrediente jamon = new Ingrediente("Jamon", Float.valueOf(7));
+        Ingrediente carne = new Ingrediente("Carne", Float.valueOf(0));
+        Ingrediente lechuga = new Ingrediente("Lechuga", Float.valueOf(0));
+        Ingrediente aguacate = new Ingrediente("Aguacate", Float.valueOf(0));
+        Ingrediente zanahoria = new Ingrediente("Zanahoria", Float.valueOf(0));
+        Ingrediente cebolla = new Ingrediente("Cebolla", Float.valueOf(0));
+        Ingrediente chiles = new Ingrediente("Chiles", Float.valueOf(0));
+        Ingrediente tomate = new Ingrediente("Tomate", Float.valueOf(5));
+        
+        
+        
+        Ingrediente milanesa = new Ingrediente("Milanesa", Float.valueOf(15));
+       
+        Ingrediente leche = new Ingrediente("Leche", Float.valueOf(0));
+       
         Ingrediente chocolate = new Ingrediente("Chocolate", Float.valueOf(10));
         Ingrediente nieve = new Ingrediente("Nieve", Float.valueOf(10));
         
@@ -64,8 +86,14 @@ public class test {
         Ingrediente cafeGrano = new Ingrediente("Cafe", Float.valueOf(0));
         Ingrediente caramelo = new Ingrediente("Caramelo", Float.valueOf(5));
         
+        
+        //Licuados
+        Producto lPlatano = new Producto("Licuado de Platano", Float.valueOf(20), 10, Categoria.LICUADOS);
+        Producto lChocomilk = new Producto("Licuado de Chocomilk", Float.valueOf(20), 10, Categoria.LICUADOS);
+        Producto lChocoplatano = new Producto("Licuado de Chocomilk", Float.valueOf(20), 10, Categoria.LICUADOS);
+        
         Producto torta = new Producto("Torta de jamon", Float.valueOf(30), 10, Categoria.SANDWICHES);
-        Producto chocomilk = new Producto("Chocomilk", Float.valueOf(20), 10, Categoria.LICUADOS);
+        
         Producto tacoFrijol = new Producto("Taco de frijol", Float.valueOf(20), 10, Categoria.SNACKS);
         Producto cafe = new Producto("Cafe", Float.valueOf(25), 10, Categoria.CAFES);
         Producto frappe = new Producto("Frappe", Float.valueOf(35), 10, Categoria.FRAPPES);
@@ -122,21 +150,21 @@ public class test {
     
     DetalleIngrediente diLeche = new DetalleIngrediente();
     diLeche.setIngrediente(ingredientes.buscarporID(7));
-    diLeche.setProducto(chocomilk);
+    diLeche.setProducto(lChocomilk);
     DetalleIngrediente diPlatano = new DetalleIngrediente();
     diPlatano.setIngrediente(ingredientes.buscarporID(8));
-    diPlatano.setProducto(chocomilk);
+    diPlatano.setProducto(lChocomilk);
     DetalleIngrediente diChocolate = new DetalleIngrediente();
     diChocolate.setIngrediente(ingredientes.buscarporID(9));
-    diChocolate.setProducto(chocomilk);
+    diChocolate.setProducto(lChocomilk);
     
     ArrayList<DetalleIngrediente> ingredientesChocomilk = new ArrayList<>();
     ingredientesChocomilk.add(diLeche);
     ingredientesChocomilk.add(diPlatano);
     ingredientesChocomilk.add(diChocolate);
     
-    chocomilk.setDetalleIngredientes(ingredientesChocomilk);
-    productos.guardar(chocomilk);
+    lChocomilk.setDetalleIngredientes(ingredientesChocomilk);
+    productos.guardar(lChocomilk);
     
     
     //
